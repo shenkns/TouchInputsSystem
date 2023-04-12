@@ -30,7 +30,9 @@ public class TouchInputsSystem : ModuleRules
 				"InputCore",
 				"UMG",
 				"DataSystem",
-				"LogSystem"
+				"LogSystem",
+				"SaveLoadSystem",
+				"SerializationSystem"
 			}
 		);
 		
@@ -38,7 +40,9 @@ public class TouchInputsSystem : ModuleRules
 			new string[]
 			{
 				"DataSystem",
-				"LogSystem"
+				"LogSystem",
+				"SaveLoadSystem",
+				"SerializationSystem"
 			}
 		);
 	}

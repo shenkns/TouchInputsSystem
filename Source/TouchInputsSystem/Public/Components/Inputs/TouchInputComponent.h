@@ -174,4 +174,7 @@ protected:
 	virtual bool ValidateDebugWidget();
 
 	virtual void DestroyComponent(bool bPromoteChildren) override;
+	
+	virtual bool LoadInputData();
+	virtual void SaveInputData();
 };

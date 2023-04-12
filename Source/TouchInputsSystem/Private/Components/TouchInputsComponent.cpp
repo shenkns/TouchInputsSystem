@@ -4,8 +4,6 @@
 
 #include "Kismet/GameplayStatics.h"
 #include "Components/Inputs/TouchInputComponent.h"
-#include "Data/TouchInputSlotData.h"
-#include "TouchInputsConfigurationObjects/TouchInputObject.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "LogSystem.h"
 

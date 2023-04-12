@@ -40,6 +40,11 @@ void UTouchInputComponent::BeginPlay()
 		return;
 	}
 
+	if(!LoadInputData())
+	{
+		SaveInputData();
+	}
+
 	CheckViewportSizeChanged();
 	CheckPawnPossessedByPlayer();
 
@@ -435,4 +440,14 @@ void UTouchInputComponent::DestroyComponent(bool bPromoteChildren)
 	}
 	
 	Super::DestroyComponent(bPromoteChildren);
+}
+
+bool UTouchInputComponent::LoadInputData()
+{
+	return false;
+}
+
+void UTouchInputComponent::SaveInputData()
+{
+	
 }
