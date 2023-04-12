@@ -5,8 +5,8 @@
 #include "Components/Inputs/TouchInputComponent.h"
 #include "FreeSwipeTouchInputComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDeltaAxisChangedEvent, FName, Name, float, Value);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDeltaLocationChangedEvent, FName, Name, FVector2D, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeltaAxisChangedEvent, float, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDeltaLocationChangedEvent, FVector2D, Value);
 
 UCLASS()
 class TOUCHINPUTSSYSTEM_API UFreeSwipeTouchInputComponent : public UTouchInputComponent
@@ -28,6 +28,8 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TouchInput|FreeSwipe|Delegates")
 	FDeltaLocationChangedEvent OnDeltaLocationChanged;
 
+protected:
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|FreeSwipe")
 	float Speed;
 
@@ -39,16 +41,12 @@ public:
 
 protected:
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|FreeSwipe")
 	FVector PreviousLocation;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|FreeSwipe")
 	FVector CurrentDelta;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|FreeSwipe")
 	FVector TargetDelta;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|FreeSwipe")
 	FVector StartLocation;
 
 public:

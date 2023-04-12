@@ -19,6 +19,16 @@ UTouchInputComponent::UTouchInputComponent()
 	bAutoActivate = true;
 
 	DebugWidgetClass = UTouchInputDebugWidget::StaticClass();
+
+	Priority = 0;
+	
+	bUseBounds = true;
+	BoundsOriginSetup = FVector2D(0.f, 0.f);
+	BoundsSizeSetup = FVector2D(1.f, 1.f);
+	bRectangular = true;
+	bBoundsPercentage = true;
+
+	bEnableDebugDrawing = false;
 }
 
 void UTouchInputComponent::BeginPlay()
@@ -27,6 +37,8 @@ void UTouchInputComponent::BeginPlay()
 
 	CheckViewportSizeChanged();
 	CheckPawnPossessedByPlayer();
+
+	SetupBounds();
 }
 
 void UTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -306,26 +318,21 @@ void UTouchInputComponent::Deactivate()
 	LOG(LogTouchInputsSystem, "Deactivated")
 }
 
-void UTouchInputComponent::SetupBounds(bool bIsEnabled, FVector2D NewBoundsOrigin, FVector2D NewBoundsSize, bool bIsInPercent, bool bIsRectangular)
+void UTouchInputComponent::SetupBounds()
 {
-	bUseBounds = bIsEnabled;
-
 	if(!bUseBounds) return;
 
-	if(bIsInPercent)
+	if(bBoundsPercentage)
 	{
-		BoundsOriginPercentage = NewBoundsOrigin;
-		BoundsSizePercentage = NewBoundsSize;
-
-		bRectangular = bIsRectangular;
-		bBoundsPercentage = bIsInPercent;
+		BoundsOriginPercentage = BoundsOriginSetup;
+		BoundsSizePercentage = BoundsSizeSetup;
 
 		UpdateBoundsInPercent(true);
 	}
 	else
 	{
-		BoundsOrigin = NewBoundsOrigin;
-		BoundsSize = NewBoundsSize;
+		BoundsOrigin = BoundsOriginSetup;
+		BoundsSize = BoundsSizeSetup;
 	}
 
 	LOG(LogTouchInputsSystem, "New Bounds Origin: %s, New Bounds Size: %s", *BoundsOrigin.ToString(), *BoundsSize.ToString())

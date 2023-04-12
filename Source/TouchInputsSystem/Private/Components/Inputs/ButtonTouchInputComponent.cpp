@@ -13,6 +13,9 @@ UButtonTouchInputComponent::UButtonTouchInputComponent()
 	DebugWidgetClass = UButtonTouchInputDebugWidget::StaticClass();
 
 	MaxFingersCount = 2;
+
+	DoubleTapInterval = 0.25;
+	TwoFingersTapInterval = 0.1;
 }
 
 void UButtonTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -97,7 +100,7 @@ void UButtonTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerInd
 		{
 			OneFingerTapTime = FDateTime::MinValue();
 
-			OnDoubleTap.Broadcast(Name, Location, FingerIndex, (LastTapTime - OneFingerTapTime).GetTotalSeconds());
+			OnDoubleTap.Broadcast(Location, FingerIndex, (LastTapTime - OneFingerTapTime).GetTotalSeconds());
 
 			LOG(LogTouchInputsSystem, "Double Tap: Touch %d %s, Tap Time: %d ms",
 				FingerIndex,
@@ -110,7 +113,7 @@ void UButtonTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerInd
 		{
 			OneFingerTapTime = LastTapTime;
 
-			OnTap.Broadcast(Name, Location, FingerIndex);
+			OnTap.Broadcast(Location, FingerIndex);
 
 			LOG(LogTouchInputsSystem, "Tap: Touch %d %s", FingerIndex, *Location.ToString())
 		}
@@ -142,7 +145,7 @@ void UButtonTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type FingerIn
 {
 	Super::OnEventTouchReleased(FingerIndex, Location);
 
-	OnTapRelease.Broadcast(Name, Location, FingerIndex);
+	OnTapRelease.Broadcast(Location, FingerIndex);
 
 	LOG(LogTouchInputsSystem, "Release: Touch %d %s", FingerIndex, *Location.ToString())
 

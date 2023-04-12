@@ -10,6 +10,10 @@
 UFreeSwipeTouchInputComponent::UFreeSwipeTouchInputComponent()
 {
 	MaxFingersCount = 1;
+
+	bEnableInterpolation = true;
+	Speed = 0.15;
+	InterpolationSpeed = 16.f;
 }
 
 void UFreeSwipeTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -20,10 +24,10 @@ void UFreeSwipeTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Ti
 
 	CurrentDelta = UKismetMathLibrary::VInterpTo(CurrentDelta, TargetDelta, DeltaTime, InterpolationSpeed);
 
-	OnDeltaXChanged.Broadcast(Name, CurrentDelta.X);
-	OnDeltaYChanged.Broadcast(Name, CurrentDelta.Y);
+	OnDeltaXChanged.Broadcast(CurrentDelta.X);
+	OnDeltaYChanged.Broadcast(CurrentDelta.Y);
 
-	OnDeltaLocationChanged.Broadcast(Name, FVector2D(CurrentDelta));
+	OnDeltaLocationChanged.Broadcast(FVector2D(CurrentDelta));
 
 	LOG(LogTouchInputsSystem, "Location Changed Delta: %s", *FVector2D(CurrentDelta).ToString())
 }
@@ -35,7 +39,7 @@ void UFreeSwipeTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type Finger
 	StartLocation = Location;
 	PreviousLocation = Location;
 
-	OnTap.Broadcast(Name, Location, FingerIndex);
+	OnTap.Broadcast(Location, FingerIndex);
 
 	LOG(LogTouchInputsSystem, "Tap: Touch %d %s", FingerIndex, *Location.ToString())
 
@@ -60,10 +64,10 @@ void UFreeSwipeTouchInputComponent::OnEventTouchMoved(ETouchIndex::Type FingerIn
 		CurrentDelta = Location;
 	}
 
-	OnDeltaXChanged.Broadcast(Name, CurrentDelta.X);
-	OnDeltaYChanged.Broadcast(Name, CurrentDelta.Y);
+	OnDeltaXChanged.Broadcast(CurrentDelta.X);
+	OnDeltaYChanged.Broadcast(CurrentDelta.Y);
 
-	OnDeltaLocationChanged.Broadcast(Name, FVector2D(CurrentDelta));
+	OnDeltaLocationChanged.Broadcast(FVector2D(CurrentDelta));
 
 	LOG(LogTouchInputsSystem, "Location Changed Delta: %s", *FVector2D(CurrentDelta).ToString())
 
@@ -87,7 +91,7 @@ void UFreeSwipeTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type Finge
 		RecalculateDelta(Location, TargetDelta, CurrentDelta);
 	}
 
-	OnTapRelease.Broadcast(Name, Location, FingerIndex);
+	OnTapRelease.Broadcast(Location, FingerIndex);
 
 	LOG(LogTouchInputsSystem, "Release: Touch %d %s", FingerIndex, *Location.ToString())
 

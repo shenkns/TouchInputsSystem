@@ -34,7 +34,7 @@ TArray<UTouchInputComponent*> UTouchInputsComponent::SortByPriority(TArray<UTouc
 {
 	Components.Sort([&](const UTouchInputComponent& ComponentA, const UTouchInputComponent& ComponentB)
 	{
-		return ComponentA.Priority > ComponentB.Priority;
+		return ComponentA.GetTouchInputPriority() > ComponentB.GetTouchInputPriority();
 	});
 
 	return Components;
@@ -61,7 +61,7 @@ void UTouchInputsComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	/*if(GetOwner()->HasAuthority())
+	if(GetOwner()->HasAuthority())
 	{
 		ClientBeginPlay();
 
@@ -73,7 +73,7 @@ void UTouchInputsComponent::BeginPlay()
 		PossessionUpdated();
 
 		return;
-	}*/
+	}
 }
 
 void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
@@ -81,8 +81,11 @@ void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 	if(NewPawn == GetOwner()) return;
 
 	bPossessed = false;
+	
+	TArray<UTouchInputComponent*> Components;
+	GetOwner()->GetComponents<UTouchInputComponent>(Components);
 
-	for(UTouchInputComponent* TouchInput : TouchInputComponents)
+	for(UTouchInputComponent* TouchInput : Components)
 	{
 		TouchInput->K2_DestroyComponent(TouchInput);
 	}
@@ -116,16 +119,7 @@ void UTouchInputsComponent::PossessionUpdated()
 
 void UTouchInputsComponent::Init()
 {
-	for(const TTuple<UTouchInputSlotData*, UTouchInputObject*>& TouchInput : TouchInputsConfiguration)
-	{
-		TouchInputComponents.Add(TouchInput.Value->AddTouchInputComponent(GetOwner(), TouchInput.Key));
-
-		LOG(LogTouchInputsSystem, "For %s Input Object In %s Slot Created %s Input Component", *TouchInput.Value->GetName(), *TouchInput.Key->Name.ToString(), *TouchInputComponents.Last(0)->GetName())
-	}
-
 	BindTouchEvents();
-
-	LOG(LogTouchInputsSystem, "%s Touch Events Binded", *GetName())
 }
 
 void UTouchInputsComponent::BindTouchEvents()
@@ -142,6 +136,8 @@ void UTouchInputsComponent::BindTouchEvents()
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &UTouchInputsComponent::OnTouchMoved);
 	LOG(LogTouchInputsSystem, "Touch Move Binded")
+	
+	LOG(LogTouchInputsSystem, "%s Touch Events Binded", *GetName())
 }
 
 void UTouchInputsComponent::BindUnPossess()
@@ -155,8 +151,10 @@ void UTouchInputsComponent::BindUnPossess()
 void UTouchInputsComponent::OnTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	LOG(LogTouchInputsSystem, "%d Touch Pressed", FingerIndex)
-	
-	const TArray<UTouchInputComponent*> SortedAndFilteredComponents = SortByPriority(FilterByBounds(FilterByActive(TouchInputComponents), Location));
+
+	TArray<UTouchInputComponent*> Components;
+	GetOwner()->GetComponents<UTouchInputComponent>(Components);
+	TArray<UTouchInputComponent*> SortedAndFilteredComponents = SortByPriority(FilterByBounds(FilterByActive(Components), Location));
 
 	LOG(LogTouchInputsSystem, "%d Touch Press Affect %d Touch Components", FingerIndex, SortedAndFilteredComponents.Num())
 
@@ -164,22 +162,25 @@ void UTouchInputsComponent::OnTouchPressed(ETouchIndex::Type FingerIndex, FVecto
 	
 	for(UTouchInputComponent* Component : SortedAndFilteredComponents)
 	{
-		if(HighestTouchInputPriority > Component->Priority && HighestTouchInputPriority != MAX_int32)
+		if(HighestTouchInputPriority > Component->GetTouchInputPriority() && HighestTouchInputPriority != MAX_int32)
 		{
 			return;
 		}
 		
 		Component->OnEventTouchPressed(FingerIndex, Location);
 		
-		HighestTouchInputPriority = Component->Priority;
+		HighestTouchInputPriority = Component->GetTouchInputPriority();
 	}
 }
 
 void UTouchInputsComponent::OnTouchMoved(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	LOG(LogTouchInputsSystem, "%d Touch Moved", FingerIndex)
+
+	TArray<UTouchInputComponent*> Components;
+	GetOwner()->GetComponents<UTouchInputComponent>(Components);
 	
-	for(UTouchInputComponent* Component : TouchInputComponents)
+	for(UTouchInputComponent* Component : Components)
 	{
 		if(Component->IsFingerExists(FingerIndex))
 		{
@@ -191,7 +192,10 @@ void UTouchInputsComponent::OnTouchMoved(ETouchIndex::Type FingerIndex, FVector 
 void UTouchInputsComponent::OnTouchReleased(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	LOG(LogTouchInputsSystem, "%d Touch Released", FingerIndex)
-	for(UTouchInputComponent* Component : TouchInputComponents)
+	TArray<UTouchInputComponent*> Components;
+	GetOwner()->GetComponents<UTouchInputComponent>(Components);
+	
+	for(UTouchInputComponent* Component : Components)
 	{
 		if(Component->IsFingerExists(FingerIndex))
 		{

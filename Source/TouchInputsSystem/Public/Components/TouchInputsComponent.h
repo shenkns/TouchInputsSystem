@@ -19,12 +19,6 @@ class TOUCHINPUTSSYSTEM_API UTouchInputsComponent : public UActorComponent
 
 protected:
 
-	UPROPERTY(EditDefaultsOnly, Instanced, Category = "TouchInputs")
-	TMap<UTouchInputSlotData*, UTouchInputObject*> TouchInputsConfiguration;
-
-	UPROPERTY()
-	TArray<UTouchInputComponent*> TouchInputComponents;
-
 	bool bPossessed;
 
 public:

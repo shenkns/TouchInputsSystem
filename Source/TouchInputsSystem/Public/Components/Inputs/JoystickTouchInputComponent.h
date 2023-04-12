@@ -24,13 +24,13 @@ enum EJoystickMobilityType
 	Floating = 2
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FJoystickAxisChangedEvent, FName, Name, float, Value);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FJoystickAxisChangedEvent, float, Value);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FJoystickLocationChanged, FVector, Location);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FJoystickClamped);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FJoystickValuesChanged, FName, Name, FVector2D, Axes, FVector, Direction)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FJoystickValuesChanged, FVector2D, Axes, FVector, Direction)
 ;
 
 UCLASS()

@@ -63,10 +63,10 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 		{
 			Axes = UKismetMathLibrary::Vector2DInterpTo(Axes, FVector2D(), DeltaTime, ClampingSpeed);
 
-			OnJoystickXAxisChanged.Broadcast(Name, Axes.X);
-			OnJoystickYAxisChanged.Broadcast(Name, Axes.Y);
+			OnJoystickXAxisChanged.Broadcast(Axes.X);
+			OnJoystickYAxisChanged.Broadcast(Axes.Y);
 
-			OnJoystickValuesChanged.Broadcast(Name, Axes, Direction);
+			OnJoystickValuesChanged.Broadcast(Axes, Direction);
 
 			LOG(LogTouchInputsSystem, "Axes Changed: %s", *FVector2D(Axes).ToString())
 		}
@@ -96,10 +96,10 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 
 		UpdateAxesVector();
 
-		OnJoystickXAxisChanged.Broadcast(Name, Axes.X);
-		OnJoystickYAxisChanged.Broadcast(Name, Axes.Y);
+		OnJoystickXAxisChanged.Broadcast(Axes.X);
+		OnJoystickYAxisChanged.Broadcast(Axes.Y);
 
-		OnJoystickValuesChanged.Broadcast(Name, Axes, Direction);
+		OnJoystickValuesChanged.Broadcast(Axes, Direction);
 
 		LOG(LogTouchInputsSystem, "Joystick Values Changed: %s, Direction: %s, Angle: %f", *FVector2D(Axes).ToString(), *Direction.ToString(), Angle)
 	}
@@ -131,7 +131,7 @@ void UJoystickTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerI
 		UpdateTempVariables();
 	}
 
-	OnTap.Broadcast(Name, DragLocation, FingerIndex);
+	OnTap.Broadcast(DragLocation, FingerIndex);
 	OnJoystickLocationChanged.Broadcast(PressLocation);
 	OnPickerLocationChanged.Broadcast(DragLocation);
 
@@ -185,7 +185,7 @@ void UJoystickTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type Finger
 	Magnitude = 0.f;
 	Angle = 0.f;
 
-	OnTapRelease.Broadcast(Name, Location, FingerIndex);
+	OnTapRelease.Broadcast(Location, FingerIndex);
 
 	if(IsValid(DebugWidget))
 	{

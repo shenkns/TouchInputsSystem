@@ -12,9 +12,9 @@ void UFreeSwipeTouchInputObject::SetTouchInputComponentEssentials()
 
 	FreeSwipeTouchInputComponent = Cast<UFreeSwipeTouchInputComponent>(TouchInputComponent);
 
-	FreeSwipeTouchInputComponent->Speed = Speed;
-	FreeSwipeTouchInputComponent->bEnableInterpolation = bEnableInterpolation;
-	FreeSwipeTouchInputComponent->InterpolationSpeed = InterpolationSpeed;
+	//FreeSwipeTouchInputComponent->Speed = Speed;
+	//FreeSwipeTouchInputComponent->bEnableInterpolation = bEnableInterpolation;
+	//FreeSwipeTouchInputComponent->InterpolationSpeed = InterpolationSpeed;
 
 	LOG(LogTouchInputsSystem, "Free Swipe Touch Input Component Essentials Set")
 }

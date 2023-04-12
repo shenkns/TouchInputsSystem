@@ -30,9 +30,9 @@ UTouchInputComponent* UTouchInputObject::AddTouchInputComponent(AActor* Owner, U
 
 void UTouchInputObject::SetTouchInputComponentEssentials()
 {
-	TouchInputComponent->Name = Slot->Tag;
-	TouchInputComponent->bEnableDebugDrawing = bEnableDebugDrawings;
-	TouchInputComponent->Priority = Priority;
+	//TouchInputComponent->Name = Slot->Tag;
+	//TouchInputComponent->bEnableDebugDrawing = bEnableDebugDrawings;
+	//TouchInputComponent->Priority = Priority;
 
 	LOG(LogTouchInputsSystem, "Default Touch Input Component Essentials Set")
 }
@@ -41,5 +41,5 @@ void UTouchInputObject::InitTouchInputComponent()
 {
 	TouchInputComponent->RegisterComponent();
 	
-	TouchInputComponent->SetupBounds(true, BoundsOrigin, BoundsSize, bBoundsPercentage, true);
+	//TouchInputComponent->SetupBounds(true, BoundsOrigin, BoundsSize, bBoundsPercentage, true);
 }
