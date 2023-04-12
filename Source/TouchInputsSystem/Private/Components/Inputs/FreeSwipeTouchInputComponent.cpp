@@ -4,6 +4,7 @@
 
 #include "LogSystem.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "Widgets/TouchInputDebugWidget.h"
 
@@ -20,6 +21,8 @@ void UFreeSwipeTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Ti
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if(UKismetSystemLibrary::IsDedicatedServer(this)) return;
+	
 	if(!bEnableInterpolation || !CurrentDelta.Equals(TargetDelta, 0.01)) return;
 
 	CurrentDelta = UKismetMathLibrary::VInterpTo(CurrentDelta, TargetDelta, DeltaTime, InterpolationSpeed);

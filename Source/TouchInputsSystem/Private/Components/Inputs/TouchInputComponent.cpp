@@ -35,6 +35,11 @@ void UTouchInputComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if(UKismetSystemLibrary::IsDedicatedServer(this))
+	{
+		return;
+	}
+
 	CheckViewportSizeChanged();
 	CheckPawnPossessedByPlayer();
 
@@ -45,6 +50,8 @@ void UTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if(UKismetSystemLibrary::IsDedicatedServer(this)) return;
+	
 	ViewportChangingCheck();
 	NetworkConnectionCheck();
 }
@@ -110,6 +117,7 @@ bool UTouchInputComponent::CheckBounds(FVector Location) const
 
 void UTouchInputComponent::ViewportChangingCheck()
 {
+	if(UKismetSystemLibrary::IsDedicatedServer(this)) return;
 	TempViewportSize = ActualViewportSize;
 
 	if(CheckViewportSizeChanged())
@@ -382,6 +390,21 @@ void UTouchInputComponent::SetupBackgroundWidget(UTexture2D* Background, FLinear
 	UpdateBackgroundWidget();
 
 	LOG(LogTouchInputsSystem, "%s Backgrounds Widget Initialized", *BackgroundWidget->GetName())
+}
+
+void UTouchInputComponent::BeginDestroy()
+{
+	Super::BeginDestroy();
+
+	if(BackgroundWidget)
+	{
+		BackgroundWidget->RemoveFromParent();
+	}
+
+	if(DebugWidget)
+	{
+		DebugWidget->RemoveFromParent();
+	}
 }
 
 bool UTouchInputComponent::ValidateDebugWidget()

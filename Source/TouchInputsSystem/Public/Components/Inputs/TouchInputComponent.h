@@ -166,6 +166,8 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "TouchInput")
 	int GetTouchInputPriority() const { return Priority; }
+
+	virtual void BeginDestroy() override;
 	
 protected:
 
