@@ -18,7 +18,9 @@ public class TouchInputsSystem : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core"
+				"Core",
+				"Slate",
+				"SlateCore"
 			}
 		);
 

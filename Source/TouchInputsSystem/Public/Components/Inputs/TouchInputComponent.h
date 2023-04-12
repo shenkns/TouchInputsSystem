@@ -62,10 +62,10 @@ protected:
 	FVector2D BoundsSizeSetup;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
-	bool bRectangular;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
 	bool bBoundsPercentage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds && bBoundsPercentage", EditConditionHides))
+	bool bRectangular;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Background")
 	TSubclassOf<UUserWidget> BackgroundWidgetClass;

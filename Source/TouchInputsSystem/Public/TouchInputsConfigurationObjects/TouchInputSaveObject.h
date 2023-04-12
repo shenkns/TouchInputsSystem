@@ -15,9 +15,15 @@ class TOUCHINPUTSSYSTEM_API UTouchInputSaveObject : public UObject
 
 public:
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
 	FVector2D BoundsOriginSetup;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
 	FVector2D BoundsSizeSetup;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
+	bool bRectangular;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
+	bool bBoundsPercentage;
 };

@@ -7,6 +7,7 @@
 #include "TouchInputSlotData.generated.h"
 
 class UTouchInputTypeData;
+class UTouchInputConfigWidget;
 
 UCLASS()
 class TOUCHINPUTSSYSTEM_API UTouchInputSlotData : public UData

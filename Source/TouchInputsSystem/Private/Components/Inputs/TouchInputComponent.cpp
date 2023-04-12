@@ -496,6 +496,8 @@ void UTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* SaveObject
 {
 	SaveObject->BoundsOriginSetup = BoundsOriginSetup;
 	SaveObject->BoundsSizeSetup = BoundsSizeSetup;
+	SaveObject->bBoundsPercentage = bBoundsPercentage;
+	SaveObject->bRectangular = bRectangular;
 }
 
 UTouchInputSaveObject* UTouchInputComponent::CreateSaveObject()

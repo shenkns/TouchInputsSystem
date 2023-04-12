@@ -190,6 +190,7 @@ void UButtonTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* Save
 	if(UButtonTouchInputSaveObject* ButtonSaveObject = Cast<UButtonTouchInputSaveObject>(SaveObject))
 	{
 		ButtonSaveObject->Tint = Tint;
+		ButtonSaveObject->Background = BackgroundTexture;
 	}
 }
 

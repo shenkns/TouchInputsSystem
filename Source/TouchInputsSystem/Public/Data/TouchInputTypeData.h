@@ -4,15 +4,17 @@
 
 #include "Data/Data.h"
 
-#include "UObject/SoftObjectPtr.h"
-
 #include "TouchInputTypeData.generated.h"
 
-class UTouchInputObject;
-class UTouchInputComponent;
+class UTouchInputConfigWidget;
 
 UCLASS()
 class TOUCHINPUTSSYSTEM_API UTouchInputTypeData : public UData
 {
 	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInputs")
+	TSubclassOf<UTouchInputConfigWidget> ConfigWidgetClass;
 };

@@ -13,6 +13,9 @@ class TOUCHINPUTSSYSTEM_API UButtonTouchInputSaveObject : public UTouchInputSave
 
 public:
 
-	UPROPERTY(EditDefaultsOnly, Category = "TouchInput|Button|Background")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Button|Background")
+	UTexture2D* Background;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Button|Background")
 	FLinearColor Tint;
 };

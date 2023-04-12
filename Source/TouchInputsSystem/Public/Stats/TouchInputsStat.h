@@ -37,6 +37,9 @@ public:
 	template<typename T>
 	T* GetSlotSave(UTouchInputSlotData* Slot) const;
 
+	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "Slots"))
+	TMap<UTouchInputSlotData*, UTouchInputSaveObject*> GetSlots() const { return InputsObjects; }
+
 	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "HasSlot"))
 	bool HasSlotSave(UTouchInputSlotData* Slot) const;
 
