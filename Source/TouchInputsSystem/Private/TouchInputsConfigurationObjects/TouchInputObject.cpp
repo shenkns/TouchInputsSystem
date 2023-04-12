@@ -15,10 +15,9 @@ UTouchInputComponent* UTouchInputObject::AddTouchInputComponent(AActor* Owner, U
 	if(!Slot) return nullptr;
 	if(!Slot->TouchInputType) return nullptr;
 	
-	const UClass* ComponentClass = Slot->TouchInputType->TouchInputComponentClass.LoadSynchronous();
-	if(!ComponentClass) return nullptr;
-	
-	TouchInputComponent = NewObject<UTouchInputComponent>(Owner, ComponentClass);
+	//const UClass* ComponentClass = Slot->TouchInputType->TouchInputComponentClass.LoadSynchronous();
+	//if(!ComponentClass) return nullptr;
+	//= NewObject<UTouchInputComponent>(Owner, ComponentClass);
 
 	SetTouchInputComponentEssentials();
 	InitTouchInputComponent();

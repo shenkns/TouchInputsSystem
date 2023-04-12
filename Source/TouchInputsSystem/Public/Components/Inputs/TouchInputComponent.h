@@ -66,6 +66,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
 	bool bBoundsPercentage;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Background")
+	TSubclassOf<UUserWidget> BackgroundWidgetClass;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Debug")
 	bool bEnableDebugDrawing;
 
@@ -110,8 +113,6 @@ protected:
 	FVector2D BackgroundWidgetForceOrigin;
 
 	bool bBackgroundWidgetOriginInPercent;
-
-	TSubclassOf<UUserWidget> BackgroundWidgetClass;
 
 protected:
 
@@ -159,7 +160,7 @@ public:
 	virtual void Activate(bool bReset) override;
 	virtual void Deactivate() override;
 
-	void SetupBounds();
+	virtual void SetupBounds();
 	void SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint);
 	void SetupBackgroundWidget(UTexture2D* Background, FLinearColor Tint, bool bUseBoundsSizeAndOrigin, FVector2D Origin, bool bOriginInPercent, FVector2D Size, bool bSizeInPercent, bool bIsRectangular);
 

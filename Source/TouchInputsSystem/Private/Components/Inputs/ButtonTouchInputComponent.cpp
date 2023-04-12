@@ -16,6 +16,8 @@ UButtonTouchInputComponent::UButtonTouchInputComponent()
 
 	DoubleTapInterval = 0.25;
 	TwoFingersTapInterval = 0.1;
+
+	Tint = FLinearColor::White;
 }
 
 void UButtonTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -154,6 +156,13 @@ void UButtonTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type FingerIn
 		DebugWidget->RemoveFromParent();
 		DebugWidget = nullptr;
 	}
+}
+
+void UButtonTouchInputComponent::SetupBounds()
+{
+	Super::SetupBounds();
+
+	SetupBackgroundsByBounds(BackgroundTexture, Tint);
 }
 
 bool UButtonTouchInputComponent::ValidateDebugWidget()

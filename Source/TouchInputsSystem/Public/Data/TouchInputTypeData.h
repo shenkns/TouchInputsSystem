@@ -15,12 +15,4 @@ UCLASS()
 class TOUCHINPUTSSYSTEM_API UTouchInputTypeData : public UData
 {
 	GENERATED_BODY()
-
-public:
-
-	UPROPERTY(EditDefaultsOnly, Category = "TouchInputs")
-	TSoftClassPtr<UTouchInputObject> TouchInputConfigurationObjectClass;
-
-	UPROPERTY(EditDefaultsOnly, Category = "TouchInputs")
-	TSoftClassPtr<UTouchInputComponent> TouchInputComponentClass;
 };

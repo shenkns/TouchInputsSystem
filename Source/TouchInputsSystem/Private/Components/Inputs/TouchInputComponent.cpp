@@ -362,6 +362,7 @@ void UTouchInputComponent::SetupBackgroundWidget(UTexture2D* Background, FLinear
 	//if(!IsValid(Background)) return;
 
 	BackgroundWidget = CreateWidget<UUserWidget>(GetWorld(), BackgroundWidgetClass);
+	if(!BackgroundWidget) return;
 
 	BackgroundWidget->SetColorAndOpacity(Tint);
 

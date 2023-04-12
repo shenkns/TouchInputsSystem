@@ -44,6 +44,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "TouchInput|Button")
 	float TwoFingersTapInterval;
 
+	UPROPERTY(EditDefaultsOnly, Category = "TouchInput|Button|Background")
+	UTexture2D* BackgroundTexture;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TouchInput|Button|Background")
+	FLinearColor Tint;
+	
 	bool bReleased = true;
 
 	TEnumAsByte<ETouchIndex::Type> CurrentFingerIndex;
@@ -69,6 +75,8 @@ public:
 	virtual void OnEventTouchPressed(ETouchIndex::Type FingerIndex, FVector Location) override;
 	virtual void OnEventTouchMoved(ETouchIndex::Type FingerIndex, FVector Location) override;
 	virtual void OnEventTouchReleased(ETouchIndex::Type FingerIndex, FVector Location) override;
+
+	virtual void SetupBounds() override;
 
 protected:
 
