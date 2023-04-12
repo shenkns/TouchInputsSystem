@@ -269,6 +269,28 @@ UTouchInputSaveObject* UJoystickTouchInputComponent::CreateSaveObject()
 	return NewObject<UJoystickTouchInputSaveObject>(this);
 }
 
+void UJoystickTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* SaveObject)
+{
+	Super::AddSaveDataToObject(SaveObject);
+
+	if(UJoystickTouchInputSaveObject* JoystickSaveObject = Cast<UJoystickTouchInputSaveObject>(SaveObject))
+	{
+		JoystickSaveObject->MaxMagnitudeSetup = MaxMagnitudeSetup;
+		JoystickSaveObject->bEnableFloating = bEnableFloating;
+	}
+}
+
+void UJoystickTouchInputComponent::LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject)
+{
+	Super::LoadDataFromSaveObject(SaveObject);
+	
+	if(const UJoystickTouchInputSaveObject* JoystickSaveObject = Cast<UJoystickTouchInputSaveObject>(SaveObject))
+	{
+		MaxMagnitudeSetup = JoystickSaveObject->MaxMagnitudeSetup;
+		bEnableFloating = JoystickSaveObject->bEnableFloating;
+	}
+}
+
 void UJoystickTouchInputComponent::UpdateTempVariables()
 {
 	PreviousMagnitude = Magnitude;

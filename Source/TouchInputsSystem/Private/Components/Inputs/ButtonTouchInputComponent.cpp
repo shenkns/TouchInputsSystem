@@ -182,3 +182,23 @@ UTouchInputSaveObject* UButtonTouchInputComponent::CreateSaveObject()
 {
 	return NewObject<UButtonTouchInputSaveObject>(this);
 }
+
+void UButtonTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* SaveObject)
+{
+	Super::AddSaveDataToObject(SaveObject);
+
+	if(UButtonTouchInputSaveObject* ButtonSaveObject = Cast<UButtonTouchInputSaveObject>(SaveObject))
+	{
+		ButtonSaveObject->Tint = Tint;
+	}
+}
+
+void UButtonTouchInputComponent::LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject)
+{
+	Super::LoadDataFromSaveObject(SaveObject);
+
+	if(const UButtonTouchInputSaveObject* ButtonSaveObject = Cast<UButtonTouchInputSaveObject>(SaveObject))
+	{
+		Tint = ButtonSaveObject->Tint;
+	}
+}

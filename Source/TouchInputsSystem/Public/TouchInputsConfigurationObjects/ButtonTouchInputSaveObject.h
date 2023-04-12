@@ -10,4 +10,9 @@ UCLASS()
 class TOUCHINPUTSSYSTEM_API UButtonTouchInputSaveObject : public UTouchInputSaveObject
 {
 	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditDefaultsOnly, Category = "TouchInput|Button|Background")
+	FLinearColor Tint;
 };

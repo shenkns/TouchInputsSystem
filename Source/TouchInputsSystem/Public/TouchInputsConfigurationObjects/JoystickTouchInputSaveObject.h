@@ -10,4 +10,12 @@ UCLASS()
 class TOUCHINPUTSSYSTEM_API UJoystickTouchInputSaveObject : public UTouchInputSaveObject
 {
 	GENERATED_BODY()
+
+public:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
+	float MaxMagnitudeSetup;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
+	bool bEnableFloating;
 };

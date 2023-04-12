@@ -83,4 +83,7 @@ protected:
 	virtual bool ValidateDebugWidget() override;
 
 	virtual UTouchInputSaveObject* CreateSaveObject() override;
+
+	virtual void AddSaveDataToObject(UTouchInputSaveObject* SaveObject) override;
+	virtual void LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject) override;
 };
