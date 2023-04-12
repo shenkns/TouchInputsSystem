@@ -70,6 +70,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Background")
 	TSubclassOf<UUserWidget> BackgroundWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Save")
+	bool bSaveInputData;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Debug")
 	bool bEnableDebugDrawing;
 

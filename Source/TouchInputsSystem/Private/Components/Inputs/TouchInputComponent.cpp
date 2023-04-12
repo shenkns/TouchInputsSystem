@@ -9,7 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/ButtonTouchInputDebugWidget.h"
 #include "LogSystem.h"
-#include "../../../../../../ManagersSystem/Source/ManagersSystem/Public/ManagersSystem.h"
+#include "ManagersSystem.h"
 #include "Interfaces/TouchInputWidgetInterface.h"
 #include "Managers/StatsManager.h"
 #include "Module/TouchInputsSystemModule.h"
@@ -32,6 +32,8 @@ UTouchInputComponent::UTouchInputComponent()
 	bRectangular = true;
 	bBoundsPercentage = true;
 
+	bSaveInputData = true;
+
 	bEnableDebugDrawing = false;
 }
 
@@ -44,11 +46,15 @@ void UTouchInputComponent::BeginPlay()
 		return;
 	}
 
-	if(!LoadInputData())
+	if(bSaveInputData)
 	{
-		SaveInputData();
-	}
+		if(!LoadInputData())
+		{
+			SaveInputData();
+		}
 
+	}
+	
 	CheckViewportSizeChanged();
 	CheckPawnPossessedByPlayer();
 
