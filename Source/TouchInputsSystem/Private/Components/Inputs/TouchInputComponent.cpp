@@ -220,9 +220,9 @@ void UTouchInputComponent::UpdateBoundsInPercent(bool bIsViewportChanged)
 {
 	if(!bIsViewportChanged || !bUseBounds || !bBoundsPercentage) return;
 
-	BoundsOrigin = FVector2D(ActualViewportSize.X * BoundsOriginPercentage.X, ActualViewportSize.Y * BoundsOriginPercentage.Y);
+	BoundsOrigin = ActualViewportSize * BoundsOriginPercentage;
 
-	const FVector2D NonRectangularBoundsSize = FVector2D(ActualViewportSize.X * BoundsSizePercentage.X, ActualViewportSize.Y * BoundsSizePercentage.Y);
+	const FVector2D NonRectangularBoundsSize = ActualViewportSize * BoundsSizePercentage;
 	
 	if(bRectangular)
 	{

@@ -11,12 +11,12 @@ void UJoystickTouchInputObject::SetTouchInputComponentEssentials()
 
 	JoystickTouchInputComponent = Cast<UJoystickTouchInputComponent>(TouchInputComponent);
 
-	JoystickTouchInputComponent->MaxMagnitude = Size;
-	JoystickTouchInputComponent->ClampingSpeed = ClampingSpeed;
+	//JoystickTouchInputComponent->MaxMagnitude = Size;
+	//JoystickTouchInputComponent->ClampingSpeed = ClampingSpeed;
 
-	JoystickTouchInputComponent->bEnableFloating = JoystickMobility == EJoystickMobilityType::Floating;;
+	//JoystickTouchInputComponent->bEnableFloating = JoystickMobility == EJoystickMobilityType::Floating;;
 
-	JoystickTouchInputComponent->LockedAxis = LockedAxis;
+	//JoystickTouchInputComponent->LockedAxis = LockedAxis;
 
 	LOG(LogTouchInputsSystem, "Joystick Touch Input Component Essentials Set")
 }

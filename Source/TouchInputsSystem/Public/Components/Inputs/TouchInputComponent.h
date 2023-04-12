@@ -148,7 +148,7 @@ public:
 	TEnumAsByte<ETouchIndex::Type> GetFingerIndexAtIndex(int Index) const;
 	FVector GetFingerLocationAtIndex(int Index) const;
 	
-	void UpdateBoundsInPercent(bool bIsViewportChanged);
+	virtual void UpdateBoundsInPercent(bool bIsViewportChanged);
 	void UpdateBackgroundWidget();
 	void UpdateViewportSize() {};
 

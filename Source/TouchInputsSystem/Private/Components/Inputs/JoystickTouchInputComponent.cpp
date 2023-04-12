@@ -12,6 +12,9 @@ UJoystickTouchInputComponent::UJoystickTouchInputComponent()
 	MaxFingersCount = 1;
 
 	DebugWidgetClass = UJoystickTouchInputDebugWidget::StaticClass();
+
+	MaxMagnitude = 0.1;
+	ClampingSpeed = 12.f;
 }
 
 void UJoystickTouchInputComponent::UpdateAxesVector()
@@ -63,10 +66,10 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 		{
 			Axes = UKismetMathLibrary::Vector2DInterpTo(Axes, FVector2D(), DeltaTime, ClampingSpeed);
 
-			OnJoystickXAxisChanged.Broadcast(Axes.X);
-			OnJoystickYAxisChanged.Broadcast(Axes.Y);
+			OnJoystickXAxisChanged.Broadcast(Axes.X * (bInvertXAxis ? -1.f : 1.f));
+			OnJoystickYAxisChanged.Broadcast(Axes.Y * (bInvertYAxis ? -1.f : 1.f));
 
-			OnJoystickValuesChanged.Broadcast(Axes, Direction);
+			OnJoystickValuesChanged.Broadcast(Axes * FVector2D(bInvertXAxis ? -1.f : 1.f, bInvertYAxis ? -1.f : 1.f), Direction);
 
 			LOG(LogTouchInputsSystem, "Axes Changed: %s", *FVector2D(Axes).ToString())
 		}
@@ -96,10 +99,10 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 
 		UpdateAxesVector();
 
-		OnJoystickXAxisChanged.Broadcast(Axes.X);
-		OnJoystickYAxisChanged.Broadcast(Axes.Y);
+		OnJoystickXAxisChanged.Broadcast(Axes.X * (bInvertXAxis ? -1.f : 1.f));
+		OnJoystickYAxisChanged.Broadcast(Axes.Y * (bInvertYAxis ? -1.f : 1.f));
 
-		OnJoystickValuesChanged.Broadcast(Axes, Direction);
+		OnJoystickValuesChanged.Broadcast(Axes * FVector2D(bInvertXAxis ? -1.f : 1.f, bInvertYAxis ? -1.f : 1.f), Direction);
 
 		LOG(LogTouchInputsSystem, "Joystick Values Changed: %s, Direction: %s, Angle: %f", *FVector2D(Axes).ToString(), *Direction.ToString(), Angle)
 	}
@@ -230,6 +233,34 @@ bool UJoystickTouchInputComponent::ValidateDebugWidget()
 	}
 
 	return false;
+}
+
+void UJoystickTouchInputComponent::SetupBounds()
+{
+	if(bBoundsPercentage)
+	{
+		MaxMagnitudePercentage = MaxMagnitudeSetup;
+	}
+	else
+	{
+		MaxMagnitude = MaxMagnitudeSetup;
+	}
+	
+	Super::SetupBounds();
+}
+
+void UJoystickTouchInputComponent::UpdateBoundsInPercent(bool bIsViewportChanged)
+{
+	Super::UpdateBoundsInPercent(bIsViewportChanged);
+
+	if(!bIsViewportChanged || !bUseBounds || !bBoundsPercentage) return;
+
+	MaxMagnitude = ActualViewportSize.Y * MaxMagnitudePercentage;
+
+	if(DebugWidget)
+	{
+		JoystickDebugWidget->Radius = MaxMagnitude;
+	}
 }
 
 void UJoystickTouchInputComponent::UpdateTempVariables()

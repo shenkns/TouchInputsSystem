@@ -62,10 +62,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TouchInput|Joystick|Delegates")
 	FJoystickValuesChanged OnJoystickValuesChanged;
 
-public:
+protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
-	float MaxMagnitude;
+	float MaxMagnitudeSetup;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
 	float ClampingSpeed;
@@ -73,8 +73,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
 	bool bEnableFloating;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick|Axes")
 	TEnumAsByte<EJoystickAxis> LockedAxis;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick|Axes")
+	bool bInvertXAxis;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick|Axes")
+	bool bInvertYAxis;
 
 protected:
 	
@@ -84,6 +90,8 @@ protected:
 	FVector PressLocation;
 	FVector DragLocation;
 	FVector Direction;
+	float MaxMagnitude;
+	float MaxMagnitudePercentage;
 	float PreviousMagnitude;
 	float Magnitude;
 	float Angle;
@@ -130,4 +138,7 @@ public:
 	void SetupFixedLocation(bool bIsEnabled, FVector2D Location, bool bIsInPercent, bool bImmediateRecalculation, bool bAdjustBoundsToLocation);
 
 	virtual bool ValidateDebugWidget() override;
+
+	virtual void SetupBounds() override;
+	virtual void UpdateBoundsInPercent(bool bIsViewportChanged) override;
 };
