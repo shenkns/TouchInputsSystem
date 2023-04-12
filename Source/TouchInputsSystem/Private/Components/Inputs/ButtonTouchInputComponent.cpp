@@ -7,6 +7,7 @@
 #include "Widgets/ButtonTouchInputDebugWidget.h"
 #include "LogSystem.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "TouchInputsConfigurationObjects/ButtonTouchInputSaveObject.h"
 
 UButtonTouchInputComponent::UButtonTouchInputComponent()
 {
@@ -175,4 +176,9 @@ bool UButtonTouchInputComponent::ValidateDebugWidget()
 	}
 
 	return false;
+}
+
+UTouchInputSaveObject* UButtonTouchInputComponent::CreateSaveObject()
+{
+	return NewObject<UButtonTouchInputSaveObject>(this);
 }

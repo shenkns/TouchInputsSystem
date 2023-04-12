@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Components/Inputs/TouchInputComponent.h"
+
 #include "JoystickTouchInputComponent.generated.h"
 
 class UJoystickTouchInputDebugWidget;
@@ -141,4 +142,8 @@ public:
 
 	virtual void SetupBounds() override;
 	virtual void UpdateBoundsInPercent(bool bIsViewportChanged) override;
+
+protected:
+
+	virtual UTouchInputSaveObject* CreateSaveObject() override;
 };

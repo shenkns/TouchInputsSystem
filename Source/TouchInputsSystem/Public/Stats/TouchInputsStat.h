@@ -1,7 +1,8 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 #pragma once
 
+#include "Data/TouchInputSlotData.h"
 #include "Interfaces/SerializationInterface.h"
 #include "Stats/Stat.h"
 
@@ -41,6 +42,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (DeterminesOutputType = "Class", CompactNodeTitle = "Slot"))
 	UTouchInputSaveObject* GetSlotSave(UTouchInputSlotData* Slot, TSubclassOf<UTouchInputSaveObject> Class) const;
+
+	UFUNCTION(BlueprintCallable, Category = "TouchInputs")
+	void SaveToSlot(UTouchInputSaveObject* InputObject, UTouchInputSlotData* Slot);
 };
 
 template <typename T>

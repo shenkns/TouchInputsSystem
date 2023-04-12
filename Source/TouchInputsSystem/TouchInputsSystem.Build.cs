@@ -32,7 +32,8 @@ public class TouchInputsSystem : ModuleRules
 				"DataSystem",
 				"LogSystem",
 				"SaveLoadSystem",
-				"SerializationSystem"
+				"SerializationSystem",
+				"ManagersSystem"
 			}
 		);
 		
@@ -42,7 +43,8 @@ public class TouchInputsSystem : ModuleRules
 				"DataSystem",
 				"LogSystem",
 				"SaveLoadSystem",
-				"SerializationSystem"
+				"SerializationSystem",
+				"ManagersSystem"
 			}
 		);
 	}

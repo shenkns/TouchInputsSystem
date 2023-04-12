@@ -5,6 +5,7 @@
 #include "LogSystem.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "TouchInputsConfigurationObjects/JoystickTouchInputSaveObject.h"
 #include "Widgets/JoystickTouchInputDebugWidget.h"
 
 UJoystickTouchInputComponent::UJoystickTouchInputComponent()
@@ -261,6 +262,11 @@ void UJoystickTouchInputComponent::UpdateBoundsInPercent(bool bIsViewportChanged
 	{
 		JoystickDebugWidget->Radius = MaxMagnitude;
 	}
+}
+
+UTouchInputSaveObject* UJoystickTouchInputComponent::CreateSaveObject()
+{
+	return NewObject<UJoystickTouchInputSaveObject>(this);
 }
 
 void UJoystickTouchInputComponent::UpdateTempVariables()

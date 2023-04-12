@@ -58,4 +58,8 @@ public:
 	virtual void OnEventTouchReleased(ETouchIndex::Type FingerIndex, FVector Location) override;
 
 	void RecalculateDelta(FVector CurrentLocation, FVector& TargetDelta, FVector& CurrentDelta) const;
+
+protected:
+
+	virtual UTouchInputSaveObject* CreateSaveObject() override;
 };

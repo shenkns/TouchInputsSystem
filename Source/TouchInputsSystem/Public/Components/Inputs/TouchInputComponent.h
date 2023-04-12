@@ -8,6 +8,7 @@
 
 #include "TouchInputComponent.generated.h"
 
+class UTouchInputSaveObject;
 class UTouchInputSlotData;
 class UUserWidget;
 class UTouchInputDebugWidget;
@@ -175,6 +176,10 @@ protected:
 
 	virtual void DestroyComponent(bool bPromoteChildren) override;
 	
-	virtual bool LoadInputData();
-	virtual void SaveInputData();
+	bool LoadInputData();
+	void SaveInputData();
+	virtual void AddSaveDataToObject(UTouchInputSaveObject* SaveObject);
+	virtual void LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject);
+	virtual UTouchInputSaveObject* CreateSaveObject();
 };
+

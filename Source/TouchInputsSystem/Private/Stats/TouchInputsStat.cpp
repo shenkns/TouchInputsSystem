@@ -1,4 +1,4 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 
 #include "Stats/TouchInputsStat.h"
@@ -32,7 +32,7 @@ bool UTouchInputsStat::PostConvertFromSaveData_Implementation()
 
 bool UTouchInputsStat::HasSlotSave(UTouchInputSlotData* Slot) const
 {
-	return InputsObjects.Contains(Slot);
+	return InputsObjects.Contains(Slot) && InputsObjects.Find(Slot);
 }
 
 UTouchInputSaveObject* UTouchInputsStat::GetSlotSave(UTouchInputSlotData* Slot, TSubclassOf<UTouchInputSaveObject> Class) const
@@ -42,4 +42,12 @@ UTouchInputSaveObject* UTouchInputsStat::GetSlotSave(UTouchInputSlotData* Slot, 
 	UTouchInputSaveObject* const* SaveObject = InputsObjects.Find(Slot);
 
 	return SaveObject ? *SaveObject : nullptr;
+}
+
+void UTouchInputsStat::SaveToSlot(UTouchInputSaveObject* InputObject, UTouchInputSlotData* Slot)
+{
+	if(!InputObject) return;
+
+	InputObject->Rename(nullptr, this);
+	InputsObjects.Add(Slot, InputObject);
 }

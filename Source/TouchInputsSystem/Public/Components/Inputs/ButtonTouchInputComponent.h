@@ -81,4 +81,6 @@ public:
 protected:
 
 	virtual bool ValidateDebugWidget() override;
+
+	virtual UTouchInputSaveObject* CreateSaveObject() override;
 };

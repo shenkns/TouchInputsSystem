@@ -13,21 +13,11 @@ class TOUCHINPUTSSYSTEM_API UTouchInputSaveObject : public UObject
 {
 	GENERATED_BODY()
 
-protected:
+public:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
+	FVector2D BoundsOriginSetup;
 
-	// Config
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
-	bool bEnableDebugDrawings = false;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
-	int Priority;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
-	FVector2D BoundsOrigin;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
-	FVector2D BoundsSize;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
-	bool bBoundsPercentage = true;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
+	FVector2D BoundsSizeSetup;
 };

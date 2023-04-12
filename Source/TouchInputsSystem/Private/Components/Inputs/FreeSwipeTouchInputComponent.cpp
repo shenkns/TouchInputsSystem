@@ -6,6 +6,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "TouchInputsConfigurationObjects/FreeSwipeTouchInputSaveObject.h"
 #include "Widgets/TouchInputDebugWidget.h"
 
 UFreeSwipeTouchInputComponent::UFreeSwipeTouchInputComponent()
@@ -110,4 +111,9 @@ void UFreeSwipeTouchInputComponent::RecalculateDelta(FVector CurrentLocation, FV
 	CalculationTargetDelta = (CurrentLocation - PreviousLocation) * Speed;
 
 	CalculationCurrentDelta = UKismetMathLibrary::VInterpTo(CurrentDelta, TargetDelta, GetWorld()->GetDeltaSeconds(), InterpolationSpeed);
+}
+
+UTouchInputSaveObject* UFreeSwipeTouchInputComponent::CreateSaveObject()
+{
+	return NewObject<UFreeSwipeTouchInputSaveObject>(this);
 }

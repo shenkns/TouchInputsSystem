@@ -9,8 +9,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/ButtonTouchInputDebugWidget.h"
 #include "LogSystem.h"
+#include "../../../../../../ManagersSystem/Source/ManagersSystem/Public/ManagersSystem.h"
 #include "Interfaces/TouchInputWidgetInterface.h"
+#include "Managers/StatsManager.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "Stats/TouchInputsStat.h"
+#include "TouchInputsConfigurationObjects/TouchInputSaveObject.h"
 
 UTouchInputComponent::UTouchInputComponent()
 {
@@ -444,10 +448,57 @@ void UTouchInputComponent::DestroyComponent(bool bPromoteChildren)
 
 bool UTouchInputComponent::LoadInputData()
 {
-	return false;
+	UManagersSystem* MS = UManagersSystem::Get(this);
+	if(!MS) return false;;
+
+	UStatsManager* SM = MS->GetManager<UStatsManager>();
+	if(!SM) return false;
+
+	UTouchInputsStat* Stat = SM->GetStat<UTouchInputsStat>();
+	if(!Stat) return false;
+
+	if(!Stat->HasSlotSave(Slot)) return false;
+
+	UTouchInputSaveObject* SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(Slot);
+	LoadDataFromSaveObject(SaveObject);
+
+	return true;
 }
 
 void UTouchInputComponent::SaveInputData()
 {
-	
+	UTouchInputSaveObject* InputSaveObject = CreateSaveObject();
+	if(!InputSaveObject) return;
+
+	AddSaveDataToObject(InputSaveObject);
+
+	UManagersSystem* MS = UManagersSystem::Get(this);
+	if(!MS) return;
+
+	UStatsManager* SM = MS->GetManager<UStatsManager>();
+	if(!SM) return;
+
+	UTouchInputsStat* Stat = SM->GetStat<UTouchInputsStat>();
+	if(!Stat) return;
+
+	Stat->SaveToSlot(InputSaveObject, Slot);
+
+	SM->SaveStats();
+}
+
+void UTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* SaveObject)
+{
+	SaveObject->BoundsOriginSetup = BoundsOriginSetup;
+	SaveObject->BoundsSizeSetup = BoundsSizeSetup;
+}
+
+UTouchInputSaveObject* UTouchInputComponent::CreateSaveObject()
+{
+	return NewObject<UTouchInputSaveObject>(this);
+}
+
+void UTouchInputComponent::LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject)
+{
+	BoundsOriginSetup = SaveObject->BoundsOriginSetup;
+	BoundsSizeSetup = SaveObject->BoundsSizeSetup;
 }
