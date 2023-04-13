@@ -26,4 +26,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Bounds", meta = (EditCondition = "bUseBounds", EditConditionHides))
 	bool bBoundsPercentage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput")
+	int ConfigWidgetZOrder;
 };

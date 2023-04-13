@@ -73,6 +73,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Save")
 	bool bSaveInputData;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Save")
+	int ConfigWidgetZOrder;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Debug")
 	bool bEnableDebugDrawing;
 

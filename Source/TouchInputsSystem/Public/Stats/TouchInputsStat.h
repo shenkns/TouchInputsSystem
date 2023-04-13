@@ -21,7 +21,7 @@ class TOUCHINPUTSSYSTEM_API UTouchInputsStat : public UStat, public ISerializati
 
 protected:
 
-	UPROPERTY(SkipSerialization, EditAnywhere, BlueprintReadOnly, Category = "TouchInputs")
+	UPROPERTY(SkipSerialization, Instanced, EditAnywhere, BlueprintReadOnly, Category = "TouchInputs")
 	TMap<UTouchInputSlotData*, UTouchInputSaveObject*> InputsObjects;
 
 private:

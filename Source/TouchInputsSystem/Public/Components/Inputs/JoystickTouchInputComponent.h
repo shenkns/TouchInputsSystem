@@ -74,6 +74,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
 	bool bEnableFloating;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
+	FLinearColor BackgroundColor;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick|Axes")
 	TEnumAsByte<EJoystickAxis> LockedAxis;
 

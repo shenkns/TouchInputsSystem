@@ -13,9 +13,12 @@ class TOUCHINPUTSSYSTEM_API UJoystickTouchInputSaveObject : public UTouchInputSa
 
 public:
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Joystick")
 	float MaxMagnitudeSetup;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Joystick")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Joystick")
 	bool bEnableFloating;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput|Joystick")
+	FLinearColor Tint;
 };

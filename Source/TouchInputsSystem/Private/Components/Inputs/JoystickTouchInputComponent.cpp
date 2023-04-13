@@ -16,6 +16,8 @@ UJoystickTouchInputComponent::UJoystickTouchInputComponent()
 
 	MaxMagnitude = 0.1;
 	ClampingSpeed = 12.f;
+
+	BackgroundColor = FLinearColor::White;
 }
 
 void UJoystickTouchInputComponent::UpdateAxesVector()
@@ -277,6 +279,7 @@ void UJoystickTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* Sa
 	{
 		JoystickSaveObject->MaxMagnitudeSetup = MaxMagnitudeSetup;
 		JoystickSaveObject->bEnableFloating = bEnableFloating;
+		JoystickSaveObject->Tint = BackgroundColor;
 	}
 }
 
@@ -288,6 +291,7 @@ void UJoystickTouchInputComponent::LoadDataFromSaveObject(UTouchInputSaveObject*
 	{
 		MaxMagnitudeSetup = JoystickSaveObject->MaxMagnitudeSetup;
 		bEnableFloating = JoystickSaveObject->bEnableFloating;
+		BackgroundColor = JoystickSaveObject->Tint;
 	}
 }
 
