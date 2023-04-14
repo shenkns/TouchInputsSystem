@@ -39,16 +39,13 @@ public:
 	void PossessionUpdated();
 
 protected:
-	
-	virtual void BeginPlay() override;
 
 	UFUNCTION()
 	void OnPawnChanged(APawn* OldPawn, APawn* NewPawn);
 
-	UFUNCTION(Client, Reliable)
-	void ClientBeginPlay();
-
 private:
+
+	virtual void BeginPlay() override;
 	
 	void Init();
 

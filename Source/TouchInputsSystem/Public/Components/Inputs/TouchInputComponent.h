@@ -128,8 +128,6 @@ protected:
 	
 public:
 	
-	virtual void BeginPlay() override;
-	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	bool CheckViewportSizeChanged();
@@ -175,6 +173,8 @@ public:
 	int GetTouchInputPriority() const { return Priority; }
 
 	virtual void BeginDestroy() override;
+
+	void Init();
 	
 protected:
 

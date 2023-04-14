@@ -6,6 +6,7 @@
 #include "Components/Inputs/TouchInputComponent.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "LogSystem.h"
+#include "Engine/ActorChannel.h"
 
 UTouchInputsComponent::UTouchInputsComponent()
 {
@@ -46,32 +47,16 @@ APlayerController* UTouchInputsComponent::GetOwningPlayerController() const
 		{
 			return OwningController;
 		}
-		else return nullptr;
+		
+		return nullptr;
 	}
-	else if(APlayerController* OwningController = GetOwner<APlayerController>())
+	
+	if(APlayerController* OwningController = GetOwner<APlayerController>())
 	{
 		return OwningController;
 	}
-	else return nullptr;
-}
-
-void UTouchInputsComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	if(GetOwner()->HasAuthority())
-	{
-		ClientBeginPlay();
-
-		return;
-	}
-
-	if(GetOwner()->GetInstigator()->IsLocallyControlled() && !bPossessed)
-	{
-		PossessionUpdated();
-
-		return;
-	}
+	
+	return nullptr;
 }
 
 void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
@@ -96,9 +81,11 @@ void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 	}
 }
 
-void UTouchInputsComponent::ClientBeginPlay_Implementation()
+void UTouchInputsComponent::BeginPlay()
 {
-	if(GetOwner()->GetInstigator()->IsLocallyControlled() && !bPossessed)
+	Super::BeginPlay();
+
+	if(GetOwningPlayerController())
 	{
 		PossessionUpdated();
 	}
@@ -118,6 +105,14 @@ void UTouchInputsComponent::PossessionUpdated()
 void UTouchInputsComponent::Init()
 {
 	BindTouchEvents();
+
+	TArray<UTouchInputComponent*> Components;
+	GetOwner()->GetComponents<UTouchInputComponent>(Components);
+
+	for(UTouchInputComponent* TouchInputComponent : Components)
+	{
+		TouchInputComponent->Init();
+	}
 }
 
 void UTouchInputsComponent::BindTouchEvents()

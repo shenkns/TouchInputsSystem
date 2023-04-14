@@ -20,7 +20,7 @@ UTouchInputComponent::UTouchInputComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
-	bAutoActivate = true;
+	bAutoActivate = false;
 
 	DebugWidgetClass = UTouchInputDebugWidget::StaticClass();
 
@@ -35,30 +35,6 @@ UTouchInputComponent::UTouchInputComponent()
 	bSaveInputData = true;
 
 	bEnableDebugDrawing = false;
-}
-
-void UTouchInputComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	if(UKismetSystemLibrary::IsDedicatedServer(this))
-	{
-		return;
-	}
-
-	if(bSaveInputData)
-	{
-		if(!LoadInputData())
-		{
-			SaveInputData();
-		}
-
-	}
-	
-	CheckViewportSizeChanged();
-	CheckPawnPossessedByPlayer();
-
-	SetupBounds();
 }
 
 void UTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -420,6 +396,25 @@ void UTouchInputComponent::BeginDestroy()
 	{
 		DebugWidget->RemoveFromParent();
 	}
+}
+
+void UTouchInputComponent::Init()
+{
+	Activate(true);
+	
+	if(bSaveInputData)
+	{
+		if(!LoadInputData())
+		{
+			SaveInputData();
+		}
+
+	}
+	
+	CheckViewportSizeChanged();
+	CheckPawnPossessedByPlayer();
+
+	SetupBounds();
 }
 
 bool UTouchInputComponent::ValidateDebugWidget()
