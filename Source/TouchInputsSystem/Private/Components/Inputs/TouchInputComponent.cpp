@@ -13,6 +13,7 @@
 #include "Interfaces/TouchInputWidgetInterface.h"
 #include "Managers/StatsManager.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "Module/TouchInputsSystemSettings.h"
 #include "Stats/TouchInputsStat.h"
 #include "TouchInputsConfigurationObjects/TouchInputSaveObject.h"
 
@@ -33,8 +34,6 @@ UTouchInputComponent::UTouchInputComponent()
 	bBoundsPercentage = true;
 
 	bSaveInputData = true;
-
-	bEnableDebugDrawing = false;
 }
 
 void UTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -419,7 +418,8 @@ void UTouchInputComponent::Init()
 
 bool UTouchInputComponent::ValidateDebugWidget()
 {
-	if(!bEnableDebugDrawing) return false;
+	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
+	if(!Settings || !Settings->bShowDebugShapes) return false;
 
 	if(!IsValid(DebugWidget))
 	{

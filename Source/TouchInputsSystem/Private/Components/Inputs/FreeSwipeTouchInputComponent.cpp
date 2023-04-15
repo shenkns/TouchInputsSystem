@@ -6,6 +6,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "Module/TouchInputsSystemSettings.h"
 #include "TouchInputsConfigurationObjects/FreeSwipeTouchInputSaveObject.h"
 #include "Widgets/TouchInputDebugWidget.h"
 
@@ -99,7 +100,8 @@ void UFreeSwipeTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type Finge
 
 	LOG(LogTouchInputsSystem, "Release: Touch %d %s", FingerIndex, *Location.ToString())
 
-	if(bEnableDebugDrawing && DebugWidget)
+	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
+	if(Settings && Settings->bShowDebugShapes && DebugWidget)
 	{
 		DebugWidget->RemoveFromParent();
 		DebugWidget = nullptr;

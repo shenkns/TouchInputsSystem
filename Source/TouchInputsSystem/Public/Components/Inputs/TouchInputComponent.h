@@ -75,9 +75,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Save")
 	int ConfigWidgetZOrder;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput|Debug")
-	bool bEnableDebugDrawing;
 
 	FVector2D BoundsOrigin;
 	FVector2D BoundsSize;

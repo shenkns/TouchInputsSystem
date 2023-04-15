@@ -7,6 +7,7 @@
 #include "Widgets/ButtonTouchInputDebugWidget.h"
 #include "LogSystem.h"
 #include "Module/TouchInputsSystemModule.h"
+#include "Module/TouchInputsSystemSettings.h"
 #include "TouchInputsConfigurationObjects/ButtonTouchInputSaveObject.h"
 
 UButtonTouchInputComponent::UButtonTouchInputComponent()
@@ -30,7 +31,8 @@ void UButtonTouchInputComponent::Activate(bool bReset)
 {
 	Super::Activate(bReset);
 
-	if(!bEnableDebugDrawing) return;
+	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
+	if(!Settings || !Settings->bShowDebugShapes) return;
 	if(!DebugWidget) return;
 
 	DebugWidget->SetVisibility(ESlateVisibility::Visible);
@@ -137,7 +139,8 @@ void UButtonTouchInputComponent::OnEventTouchMoved(ETouchIndex::Type FingerIndex
 
 	OnTapMove.Broadcast(Location, FingerIndex);
 
-	if(bEnableDebugDrawing && DebugWidget)
+	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
+	if(Settings && Settings->bShowDebugShapes && DebugWidget)
 	{
 		DebugWidget->BoundsSize = BoundsSize;
 		DebugWidget->BoundsOrigin = BoundsOrigin;
@@ -152,7 +155,8 @@ void UButtonTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type FingerIn
 
 	LOG(LogTouchInputsSystem, "Release: Touch %d %s", FingerIndex, *Location.ToString())
 
-	if(bEnableDebugDrawing && DebugWidget)
+	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
+	if(Settings && Settings->bShowDebugShapes && DebugWidget)
 	{
 		DebugWidget->RemoveFromParent();
 		DebugWidget = nullptr;
