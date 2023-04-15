@@ -19,7 +19,7 @@
 		{
 			"Name": "TouchInputsSystem",
 			"Type": "Runtime",
-			"LoadingPhase": "PostConfigInit",
+			"LoadingPhase": "Default",
 			"WhitelistPlatforms": [
 				"Win64",
 				"Android",
