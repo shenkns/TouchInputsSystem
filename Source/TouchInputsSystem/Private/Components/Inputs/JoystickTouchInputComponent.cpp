@@ -7,6 +7,7 @@
 #include "Module/TouchInputsSystemModule.h"
 #include "TouchInputsConfigurationObjects/JoystickTouchInputSaveObject.h"
 #include "Widgets/JoystickTouchInputDebugWidget.h"
+#include "Widgets/JoystickWidget.h"
 
 UJoystickTouchInputComponent::UJoystickTouchInputComponent()
 {
@@ -250,6 +251,19 @@ void UJoystickTouchInputComponent::SetupBounds()
 	}
 	
 	Super::SetupBounds();
+
+	SetupBackgroundsByBounds(nullptr, BackgroundColor);
+}
+
+void UJoystickTouchInputComponent::SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint)
+{
+	JoystickWidget = CreateWidget<UJoystickWidget>(GetWorld(), BackgroundWidgetClass);
+	BackgroundWidget = JoystickWidget;
+
+	JoystickWidget->InitJoystickWidget(this);
+	JoystickWidget->SetColorAndOpacity(Tint);
+
+	JoystickWidget->AddToViewport();
 }
 
 void UJoystickTouchInputComponent::UpdateBoundsInPercent(bool bIsViewportChanged)

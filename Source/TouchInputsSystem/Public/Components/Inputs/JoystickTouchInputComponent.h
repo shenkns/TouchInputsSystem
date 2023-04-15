@@ -6,6 +6,7 @@
 
 #include "JoystickTouchInputComponent.generated.h"
 
+class UJoystickWidget;
 class UJoystickTouchInputDebugWidget;
 
 UENUM(BlueprintType)
@@ -106,7 +107,7 @@ protected:
 	bool bClamped = true;
 
 	UPROPERTY()
-	UUserWidget* JoystickWidget;
+	UJoystickWidget* JoystickWidget;
 
 	bool bHideOnUnPossession;
 	bool bUseWidgetSize;
@@ -144,6 +145,8 @@ public:
 	virtual bool ValidateDebugWidget() override;
 
 	virtual void SetupBounds() override;
+	virtual void SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint) override;
+	
 	virtual void UpdateBoundsInPercent(bool bIsViewportChanged) override;
 
 protected:

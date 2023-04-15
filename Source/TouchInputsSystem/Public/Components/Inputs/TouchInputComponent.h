@@ -160,13 +160,18 @@ public:
 	FVector2D GetScreenSizeBySizeInPercent(FVector2D PercentSize) const;
 
 	bool IsPlayerControllerLoaded() const;
+
+	UFUNCTION(BlueprintPure, Category = "TouchInput|Fingers")
 	bool IsFingerExists(TEnumAsByte<ETouchIndex::Type> FingerIndex) const;
+
+	UFUNCTION(BlueprintPure, Category = "TouhcInput|Fingers")
+	TMap<TEnumAsByte<ETouchIndex::Type>, FVector> GetFingers() const { return Fingers; }
 
 	virtual void Activate(bool bReset) override;
 	virtual void Deactivate() override;
 
 	virtual void SetupBounds();
-	void SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint);
+	virtual void SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint);
 	void SetupBackgroundWidget(UTexture2D* Background, FLinearColor Tint, bool bUseBoundsSizeAndOrigin, FVector2D Origin, bool bOriginInPercent, FVector2D Size, bool bSizeInPercent, bool bIsRectangular);
 
 	UFUNCTION(BlueprintPure, Category = "TouchInput")
