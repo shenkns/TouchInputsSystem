@@ -20,6 +20,7 @@ class TOUCHINPUTSSYSTEM_API UTouchInputsComponent : public UActorComponent
 protected:
 
 	bool bPossessed;
+	bool bBinded;
 
 public:
 

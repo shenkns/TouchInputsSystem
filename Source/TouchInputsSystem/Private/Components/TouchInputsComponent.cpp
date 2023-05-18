@@ -119,6 +119,8 @@ void UTouchInputsComponent::Init()
 
 void UTouchInputsComponent::BindTouchEvents()
 {
+	if(bBinded) return;
+	
 	const APlayerController* OwningPlayerController = GetOwningPlayerController();
 
 	if(!OwningPlayerController) return;
@@ -131,7 +133,8 @@ void UTouchInputsComponent::BindTouchEvents()
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &UTouchInputsComponent::OnTouchMoved);
 	LOG(LogTouchInputsSystem, "Touch Move Binded")
-	
+
+	bBinded = true;
 	LOG(LogTouchInputsSystem, "%s Touch Events Binded", *GetName())
 }
 
