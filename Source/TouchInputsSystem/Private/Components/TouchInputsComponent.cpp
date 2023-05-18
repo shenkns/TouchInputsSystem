@@ -70,7 +70,7 @@ void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 
 	for(UTouchInputComponent* TouchInput : Components)
 	{
-		TouchInput->K2_DestroyComponent(TouchInput);
+		TouchInput->Deactivate();
 	}
 
 	if(!NewPawn) return;
@@ -93,6 +93,8 @@ void UTouchInputsComponent::BeginPlay()
 
 void UTouchInputsComponent::PossessionUpdated()
 {
+	if(bPossessed) return;
+	
 	bPossessed = true;
 		
 	Init();
