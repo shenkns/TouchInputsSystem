@@ -6,8 +6,9 @@
 #include "Managers/StatsManager.h"
 #include "Stats/TouchInputsStat.h"
 
-void UTouchInputConfigWidget::InitWithSlot_Implementation(UTouchInputSlotData* NewSlot)
+void UTouchInputConfigWidget::InitWithSlot_Implementation(UTouchInputPresetSlot* NewPresetSlot, UTouchInputSlotData* NewSlot)
 {
+	PresetSlot = NewPresetSlot;
 	InputSlotData = NewSlot;
 
 	const UManagersSystem* MS = UManagersSystem::Get(this);
@@ -19,7 +20,7 @@ void UTouchInputConfigWidget::InitWithSlot_Implementation(UTouchInputSlotData* N
 	const UTouchInputsStat* Stat = SM->GetStat<UTouchInputsStat>();
 	if(!Stat) return;
 
-	SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(InputSlotData);
+	SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(PresetSlot, InputSlotData);
 
 	LoadDataFromSlot();
 }

@@ -450,18 +450,18 @@ void UTouchInputComponent::DestroyComponent(bool bPromoteChildren)
 
 bool UTouchInputComponent::LoadInputData()
 {
-	UManagersSystem* MS = UManagersSystem::Get(this);
+	const UManagersSystem* MS = UManagersSystem::Get(this);
 	if(!MS) return false;;
 
-	UStatsManager* SM = MS->GetManager<UStatsManager>();
+	const UStatsManager* SM = MS->GetManager<UStatsManager>();
 	if(!SM) return false;
 
-	UTouchInputsStat* Stat = SM->GetStat<UTouchInputsStat>();
+	const UTouchInputsStat* Stat = SM->GetStat<UTouchInputsStat>();
 	if(!Stat) return false;
 
-	if(!Stat->HasSlotSave(Slot)) return false;
+	if(!Stat->HasSlotSave(PresetSlot, Slot)) return false;
 
-	UTouchInputSaveObject* SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(Slot);
+	UTouchInputSaveObject* SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(PresetSlot, Slot);
 	LoadDataFromSaveObject(SaveObject);
 
 	return true;
@@ -483,7 +483,7 @@ void UTouchInputComponent::SaveInputData()
 	UTouchInputsStat* Stat = SM->GetStat<UTouchInputsStat>();
 	if(!Stat) return;
 
-	Stat->SaveToSlot(InputSaveObject, Slot);
+	Stat->SaveToSlot(InputSaveObject, PresetSlot, Slot);
 
 	SM->SaveStats();
 }

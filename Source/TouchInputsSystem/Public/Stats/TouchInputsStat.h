@@ -13,6 +13,25 @@
 
 class UTouchInputSlotData;
 class UTouchInputSaveObject;
+class UTouchInputPresetSlot;
+
+USTRUCT(BlueprintType)
+struct FTouchInputPreset
+{
+	GENERATED_BODY()
+
+	UPROPERTY(Instanced, SkipSerialization, EditAnywhere, BlueprintReadWrite)
+	TMap<UTouchInputSlotData*, UTouchInputSaveObject*> InputObjects;
+};
+
+USTRUCT(BlueprintType)
+struct FTouchInputPresetSaveData
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TMap<FName, FObjectSaveData> InputObjectsSaveData;
+};
 
 UCLASS()
 class TOUCHINPUTSSYSTEM_API UTouchInputsStat : public UStat, public ISerializationInterface
@@ -21,13 +40,13 @@ class TOUCHINPUTSSYSTEM_API UTouchInputsStat : public UStat, public ISerializati
 
 protected:
 
-	UPROPERTY(SkipSerialization, Instanced, EditAnywhere, BlueprintReadOnly, Category = "TouchInputs")
-	TMap<UTouchInputSlotData*, UTouchInputSaveObject*> InputsObjects;
+	UPROPERTY(SkipSerialization, EditAnywhere, BlueprintReadOnly, Category = "TouchInputs")
+	TMap<UTouchInputPresetSlot*, FTouchInputPreset> InputPresets;
 
 private:
 
 	UPROPERTY()
-	TMap<UTouchInputSlotData*, FObjectSaveData> SaveData;
+	TMap<FName, FTouchInputPresetSaveData> SaveData;
 
 public:
 
@@ -35,27 +54,36 @@ public:
 	virtual bool PostConvertFromSaveData_Implementation() override;
 
 	template<typename T>
-	T* GetSlotSave(UTouchInputSlotData* Slot) const;
+	T* GetSlotSave(UTouchInputPresetSlot* Preset, UTouchInputSlotData* Slot) const;
+
+	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "Presets"))
+	TMap<UTouchInputPresetSlot*, FTouchInputPreset> GetPresets() const { return InputPresets; }
+
+	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "HasPreset"))
+	bool HasPreset(UTouchInputPresetSlot* Preset) const;
+
+	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "Preset"))
+	FTouchInputPreset GetPreset(UTouchInputPresetSlot* Preset) const;
 
 	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "Slots"))
-	TMap<UTouchInputSlotData*, UTouchInputSaveObject*> GetSlots() const { return InputsObjects; }
+	TMap<UTouchInputSlotData*, UTouchInputSaveObject*> GetSlots(UTouchInputPresetSlot* Preset) const;
 
 	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (CompactNodeTitle = "HasSlot"))
-	bool HasSlotSave(UTouchInputSlotData* Slot) const;
+	bool HasSlotSave(UTouchInputPresetSlot* Preset, UTouchInputSlotData* Slot) const;
 
 	UFUNCTION(BlueprintPure, Category = "TouchInputs", meta = (DeterminesOutputType = "Class", CompactNodeTitle = "Slot"))
-	UTouchInputSaveObject* GetSlotSave(UTouchInputSlotData* Slot, TSubclassOf<UTouchInputSaveObject> Class) const;
+	UTouchInputSaveObject* GetSlotSave(UTouchInputPresetSlot* Preset, UTouchInputSlotData* Slot, TSubclassOf<UTouchInputSaveObject> Class) const;
 
 	UFUNCTION(BlueprintCallable, Category = "TouchInputs")
-	void SaveToSlot(UTouchInputSaveObject* InputObject, UTouchInputSlotData* Slot);
+	void SaveToSlot(UTouchInputSaveObject* InputObject, UTouchInputPresetSlot* Preset, UTouchInputSlotData* Slot);
 };
 
 template <typename T>
-T* UTouchInputsStat::GetSlotSave(UTouchInputSlotData* Slot) const
+T* UTouchInputsStat::GetSlotSave(UTouchInputPresetSlot* Preset, UTouchInputSlotData* Slot) const
 {
-	if(!HasSlotSave(Slot)) return nullptr;
+	if(!HasSlotSave(Preset, Slot)) return nullptr;
 
-	UTouchInputSaveObject* const* SaveObject = InputsObjects.Find(Slot);
+	UTouchInputSaveObject* const* SaveObject = GetPreset(Preset).InputObjects.Find(Slot);
 
 	return *SaveObject ? static_cast<T*>(*SaveObject) : nullptr;
 }

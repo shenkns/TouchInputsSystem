@@ -8,6 +8,7 @@
 
 class UTouchInputSaveObject;
 class UTouchInputSlotData;
+class UTouchInputPresetSlot;
 
 UCLASS()
 class TOUCHINPUTSSYSTEM_API UTouchInputConfigWidget : public UUserWidget
@@ -17,6 +18,9 @@ class TOUCHINPUTSSYSTEM_API UTouchInputConfigWidget : public UUserWidget
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "TouchInput")
+	UTouchInputPresetSlot* PresetSlot;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "TouchInput")
 	UTouchInputSlotData* InputSlotData;
 
 	UPROPERTY(BlueprintReadOnly, Category = "TouchInput")
@@ -25,7 +29,7 @@ protected:
 public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "TouchInput")
-	void InitWithSlot(UTouchInputSlotData* NewSlot);
+	void InitWithSlot(UTouchInputPresetSlot* NewPresetSlot, UTouchInputSlotData* NewSlot);
 
 protected:
 

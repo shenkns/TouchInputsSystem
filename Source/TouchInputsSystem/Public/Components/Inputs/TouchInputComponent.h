@@ -9,6 +9,7 @@
 #include "TouchInputComponent.generated.h"
 
 class UTouchInputSaveObject;
+class UTouchInputPresetSlot;
 class UTouchInputSlotData;
 class UUserWidget;
 class UTouchInputDebugWidget;
@@ -46,6 +47,9 @@ public:
 
 protected:
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
+	UTouchInputPresetSlot* PresetSlot;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")
 	UTouchInputSlotData* Slot;
 
