@@ -366,6 +366,7 @@ void UTouchInputComponent::SetupBackgroundWidget(UTexture2D* Background, FLinear
 
 	if(BackgroundWidget->GetClass()->ImplementsInterface(UTouchInputWidgetInterface::StaticClass()))
 	{
+		ITouchInputWidgetInterface::Execute_SetOwningInputComponent(BackgroundWidget, this);
 		ITouchInputWidgetInterface::Execute_SetBackground(BackgroundWidget, Background);
 	}
 	

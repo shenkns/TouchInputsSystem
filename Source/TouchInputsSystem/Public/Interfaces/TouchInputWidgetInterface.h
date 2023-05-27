@@ -3,6 +3,7 @@
 #pragma once
 
 #include "UObject/Interface.h"
+
 #include "TouchInputWidgetInterface.generated.h"
 
 UINTERFACE(MinimalAPI, Blueprintable)
@@ -55,4 +56,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "TouchInput|Widget")
 	void SetBackground(UTexture2D* Background);
+	
+    UFUNCTION(BlueprintImplementableEvent, Category = "TouchInput|Widget")
+    void SetOwningInputComponent(UTouchInputComponent* TouchInputComponent);
 };
