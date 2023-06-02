@@ -112,6 +112,16 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 	}
 }
 
+void UJoystickTouchInputComponent::Deactivate()
+{
+	Super::Deactivate();
+
+	if(IsValid(JoystickWidget))
+	{
+		JoystickWidget->RemoveFromParent();
+	}
+}
+
 void UJoystickTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Super::OnEventTouchPressed(FingerIndex, Location);
