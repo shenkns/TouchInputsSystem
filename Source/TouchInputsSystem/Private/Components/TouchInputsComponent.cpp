@@ -99,9 +99,12 @@ void UTouchInputsComponent::PossessionUpdated()
 		
 	Init();
 		
-	GetOwningPlayerController()->OnPossessedPawnChanged.AddUniqueDynamic(this, &UTouchInputsComponent::OnPawnChanged);
+	if(APlayerController* OwningPlayerController = GetOwningPlayerController())
+	{
+		OwningPlayerController->OnPossessedPawnChanged.AddUniqueDynamic(this, &UTouchInputsComponent::OnPawnChanged);
 
-	DEBUG_MESSAGE(true, LogTouchInputsSystem, "%s", *GetOwningPlayerController()->GetName())
+		DEBUG_MESSAGE(true, LogTouchInputsSystem, "%s", *OwningPlayerController->GetName())
+	}
 }
 
 void UTouchInputsComponent::Init()
@@ -113,7 +116,10 @@ void UTouchInputsComponent::Init()
 
 	for(UTouchInputComponent* TouchInputComponent : Components)
 	{
-		TouchInputComponent->Init();
+		if(IsValid(TouchInputComponent))
+		{
+			TouchInputComponent->Init();
+		}
 	}
 }
 

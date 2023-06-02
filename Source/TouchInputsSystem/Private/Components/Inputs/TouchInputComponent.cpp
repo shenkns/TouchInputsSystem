@@ -474,7 +474,7 @@ void UTouchInputComponent::SaveInputData()
 
 	AddSaveDataToObject(InputSaveObject);
 
-	UManagersSystem* MS = UManagersSystem::Get(this);
+	const UManagersSystem* MS = UManagersSystem::Get(this);
 	if(!MS) return;
 
 	UStatsManager* SM = MS->GetManager<UStatsManager>();
@@ -490,6 +490,8 @@ void UTouchInputComponent::SaveInputData()
 
 void UTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* SaveObject)
 {
+	if(!IsValid(SaveObject)) return;
+	
 	SaveObject->BoundsOriginSetup = BoundsOriginSetup;
 	SaveObject->BoundsSizeSetup = BoundsSizeSetup;
 	SaveObject->bBoundsPercentage = bBoundsPercentage;
@@ -504,6 +506,8 @@ UTouchInputSaveObject* UTouchInputComponent::CreateSaveObject()
 
 void UTouchInputComponent::LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject)
 {
+	if(!IsValid(SaveObject)) return;
+	
 	BoundsOriginSetup = SaveObject->BoundsOriginSetup;
 	BoundsSizeSetup = SaveObject->BoundsSizeSetup;
 }
