@@ -299,6 +299,8 @@ void UJoystickTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* Sa
 {
 	Super::AddSaveDataToObject(SaveObject);
 
+	if(!IsValid(SaveObject)) return;
+
 	if(UJoystickTouchInputSaveObject* JoystickSaveObject = Cast<UJoystickTouchInputSaveObject>(SaveObject))
 	{
 		JoystickSaveObject->MaxMagnitudeSetup = MaxMagnitudeSetup;
@@ -310,6 +312,8 @@ void UJoystickTouchInputComponent::AddSaveDataToObject(UTouchInputSaveObject* Sa
 void UJoystickTouchInputComponent::LoadDataFromSaveObject(UTouchInputSaveObject* SaveObject)
 {
 	Super::LoadDataFromSaveObject(SaveObject);
+
+	if(!IsValid(SaveObject)) return;
 	
 	if(const UJoystickTouchInputSaveObject* JoystickSaveObject = Cast<UJoystickTouchInputSaveObject>(SaveObject))
 	{
