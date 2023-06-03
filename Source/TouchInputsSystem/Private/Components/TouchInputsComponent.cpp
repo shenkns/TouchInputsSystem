@@ -10,7 +10,7 @@
 
 UTouchInputsComponent::UTouchInputsComponent()
 {
-	SetIsReplicatedByDefault(true);
+	SetIsReplicatedByDefault(false);
 }
 
 TArray<UTouchInputComponent*> UTouchInputsComponent::FilterByActive(TArray<UTouchInputComponent*> Components)
