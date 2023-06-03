@@ -31,7 +31,7 @@ void UTouchInputConfigWidget::SaveDataToSlot_Implementation()
 
 void UTouchInputConfigWidget::LoadDataFromSlot_Implementation()
 {
-	if(!SaveObject) return;
+	if(!IsValid(SaveObject)) return;
 
 	SetOrigin(SaveObject->BoundsOriginSetup);
 	SetSize(SaveObject->BoundsSizeSetup);
@@ -41,6 +41,8 @@ FReply UTouchInputConfigWidget::NativeOnTouchMoved(const FGeometry& InGeometry, 
 {
 	BoundsOrigin += InGestureEvent.GetCursorDelta();
 	SetPositionInViewport(BoundsOrigin);
+
+	if(!IsValid(SaveObject)) return Super::NativeOnTouchMoved(InGeometry, InGestureEvent);
 
 	if(SaveObject->bBoundsPercentage)
 	{
@@ -59,6 +61,8 @@ FReply UTouchInputConfigWidget::NativeOnTouchMoved(const FGeometry& InGeometry, 
 
 void UTouchInputConfigWidget::SetSize(FVector2D NewSize)
 {
+	if(!IsValid(SaveObject)) return;
+	
 	if(SaveObject->bBoundsPercentage)
 	{
 		FVector2D ViewportSize;
@@ -90,6 +94,8 @@ void UTouchInputConfigWidget::SetSize(FVector2D NewSize)
 
 void UTouchInputConfigWidget::SetOrigin(FVector2D NewOrigin)
 {
+	if(!IsValid(SaveObject)) return;
+	
 	if(SaveObject->bBoundsPercentage)
 	{
 		FVector2D ViewportSize;
