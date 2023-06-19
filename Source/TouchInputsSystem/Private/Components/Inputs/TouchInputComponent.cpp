@@ -359,7 +359,7 @@ void UTouchInputComponent::SetupBackgroundWidget(UTexture2D* Background, FLinear
 
 	//if(!IsValid(Background)) return;
 
-	BackgroundWidget = CreateWidget<UUserWidget>(GetWorld(), BackgroundWidgetClass);
+	BackgroundWidget = CreateWidget<UUserWidget, UWorld>(GetWorld(), BackgroundWidgetClass);
 	if(!BackgroundWidget) return;
 
 	BackgroundWidget->SetColorAndOpacity(Tint);
@@ -424,7 +424,7 @@ bool UTouchInputComponent::ValidateDebugWidget()
 
 	if(!IsValid(DebugWidget))
 	{
-		DebugWidget = CreateWidget<UTouchInputDebugWidget>(GetWorld(), DebugWidgetClass);
+		DebugWidget = CreateWidget<UTouchInputDebugWidget, UWorld>(GetWorld(), DebugWidgetClass);
 		if(!DebugWidget) return false;
 
 		DebugWidget->AddToViewport();

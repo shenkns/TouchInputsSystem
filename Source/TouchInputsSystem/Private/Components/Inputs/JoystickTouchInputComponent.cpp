@@ -267,7 +267,7 @@ void UJoystickTouchInputComponent::SetupBounds()
 
 void UJoystickTouchInputComponent::SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint)
 {
-	JoystickWidget = CreateWidget<UJoystickWidget>(GetWorld(), BackgroundWidgetClass);
+	JoystickWidget = CreateWidget<UJoystickWidget, UWorld>(GetWorld(), BackgroundWidgetClass);
 	BackgroundWidget = JoystickWidget;
 
 	JoystickWidget->InitJoystickWidget(this);
