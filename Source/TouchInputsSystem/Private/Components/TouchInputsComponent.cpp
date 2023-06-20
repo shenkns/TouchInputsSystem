@@ -72,13 +72,6 @@ void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 	{
 		TouchInput->Deactivate();
 	}
-
-	if(!NewPawn) return;
-	
-	if(APlayerController* Controller = NewPawn->GetController<APlayerController>())
-	{
-		Controller->OnPossessedPawnChanged.RemoveDynamic(this, &UTouchInputsComponent::OnPawnChanged);
-	}
 }
 
 void UTouchInputsComponent::BeginPlay()
@@ -98,13 +91,6 @@ void UTouchInputsComponent::PossessionUpdated()
 	bPossessed = true;
 		
 	Init();
-		
-	if(APlayerController* OwningPlayerController = GetOwningPlayerController())
-	{
-		OwningPlayerController->OnPossessedPawnChanged.AddUniqueDynamic(this, &UTouchInputsComponent::OnPawnChanged);
-
-		DEBUG_MESSAGE(true, LogTouchInputsSystem, "%s", *OwningPlayerController->GetName())
-	}
 }
 
 void UTouchInputsComponent::Init()
@@ -142,14 +128,6 @@ void UTouchInputsComponent::BindTouchEvents()
 
 	bBinded = true;
 	LOG(LogTouchInputsSystem, "%s Touch Events Binded", *GetName())
-}
-
-void UTouchInputsComponent::BindUnPossess()
-{
-	if(APlayerController* OwningController = GetOwningPlayerController())
-	{
-		OwningController->OnPossessedPawnChanged.AddUniqueDynamic(this, &UTouchInputsComponent::OnPawnChanged);
-	}
 }
 
 void UTouchInputsComponent::OnTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)

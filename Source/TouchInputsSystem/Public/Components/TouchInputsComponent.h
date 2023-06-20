@@ -51,7 +51,6 @@ private:
 	void Init();
 
 	void BindTouchEvents();
-	void BindUnPossess();
 
 	void OnTouchPressed(ETouchIndex::Type FingerIndex, FVector Location);
 	void OnTouchMoved(ETouchIndex::Type FingerIndex, FVector Location);
