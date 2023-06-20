@@ -6,7 +6,7 @@
 	"Description": "Touch Inputs System using to easy implement mobile inputs to any project.",
 	"Category": "Inputs",
 	"CreatedBy": "shenkns",
-	"EngineVersion": "4.26.2",
+	"EngineVersion": "4.26",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
