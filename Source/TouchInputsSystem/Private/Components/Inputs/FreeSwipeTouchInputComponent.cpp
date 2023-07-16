@@ -110,7 +110,7 @@ void UFreeSwipeTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type Finge
 
 void UFreeSwipeTouchInputComponent::RecalculateDelta(FVector CurrentLocation, FVector& CalculationTargetDelta, FVector& CalculationCurrentDelta) const
 {
-	CalculationTargetDelta = (CurrentLocation - PreviousLocation) * Speed;
+	CalculationTargetDelta = (CurrentLocation - PreviousLocation) * (Speed * GetWorld()->GetDeltaSeconds());
 
 	CalculationCurrentDelta = UKismetMathLibrary::VInterpTo(CurrentDelta, TargetDelta, GetWorld()->GetDeltaSeconds(), InterpolationSpeed);
 }
