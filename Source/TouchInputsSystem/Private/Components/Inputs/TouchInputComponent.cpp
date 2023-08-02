@@ -450,7 +450,7 @@ void UTouchInputComponent::DestroyComponent(bool bPromoteChildren)
 
 bool UTouchInputComponent::LoadInputData()
 {
-	const UManagersSystem* MS = UManagersSystem::Get(this);
+	const UManagersSystem* MS = UManagersSystem::GetWithContext(this);
 	if(!MS) return false;;
 
 	const UStatsManager* SM = MS->GetManager<UStatsManager>();
@@ -474,7 +474,7 @@ void UTouchInputComponent::SaveInputData()
 
 	AddSaveDataToObject(InputSaveObject);
 
-	const UManagersSystem* MS = UManagersSystem::Get(this);
+	const UManagersSystem* MS = UManagersSystem::GetWithContext(this);
 	if(!MS) return;
 
 	UStatsManager* SM = MS->GetManager<UStatsManager>();

@@ -11,7 +11,7 @@ void UTouchInputConfigWidget::InitWithSlot_Implementation(UTouchInputPresetSlot*
 	PresetSlot = NewPresetSlot;
 	InputSlotData = NewSlot;
 
-	const UManagersSystem* MS = UManagersSystem::Get(this);
+	const UManagersSystem* MS = UManagersSystem::GetWithContext(this);
 	if(!MS) return;
 
 	const UStatsManager* SM = MS->GetManager<UStatsManager>();
