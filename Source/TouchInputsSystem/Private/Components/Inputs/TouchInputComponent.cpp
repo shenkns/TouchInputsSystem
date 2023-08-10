@@ -451,7 +451,7 @@ void UTouchInputComponent::DestroyComponent(bool bPromoteChildren)
 bool UTouchInputComponent::LoadInputData()
 {
 	const UManagersSystem* MS = UManagersSystem::GetWithContext(this);
-	if(!MS) return false;;
+	if(!MS) return false;
 
 	const UStatsManager* SM = MS->GetManager<UStatsManager>();
 	if(!SM) return false;
@@ -460,6 +460,8 @@ bool UTouchInputComponent::LoadInputData()
 	if(!Stat) return false;
 
 	if(!Stat->HasSlotSave(PresetSlot, Slot)) return false;
+
+	return false;
 
 	UTouchInputSaveObject* SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(PresetSlot, Slot);
 	LoadDataFromSaveObject(SaveObject);
