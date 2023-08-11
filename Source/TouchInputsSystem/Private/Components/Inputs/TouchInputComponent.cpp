@@ -461,9 +461,9 @@ bool UTouchInputComponent::LoadInputData()
 
 	if(!Stat->HasSlotSave(PresetSlot, Slot)) return false;
 
-	return false;
-
 	UTouchInputSaveObject* SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(PresetSlot, Slot);
+	if(!SaveObject) return false;
+	
 	LoadDataFromSaveObject(SaveObject);
 
 	return true;
