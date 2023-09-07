@@ -129,7 +129,7 @@ void UTouchInputsComponent::BindTouchEvents()
 	
 	const APlayerController* OwningPlayerController = GetOwningPlayerController();
 
-	if(!OwningPlayerController) return;
+	if(!OwningPlayerController || !OwningPlayerController->InputComponent) return;
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &UTouchInputsComponent::OnTouchPressed);
 	LOG(LogTouchInputsSystem, "Touch Press Binded")

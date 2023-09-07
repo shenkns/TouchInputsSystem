@@ -48,6 +48,8 @@ void UTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 bool UTouchInputComponent::CheckViewportSizeChanged()
 {
+	if(!GEngine->GameViewport) return false;
+	
 	FVector2D ViewportSize;
 	GEngine->GameViewport->GetViewportSize(ViewportSize);
 	if(ActualViewportSize != ViewportSize)
