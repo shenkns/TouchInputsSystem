@@ -48,6 +48,8 @@ void UTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 bool UTouchInputComponent::CheckViewportSizeChanged()
 {
+	if(!GEngine->GameViewport) return false;
+	
 	FVector2D ViewportSize;
 	GEngine->GameViewport->GetViewportSize(ViewportSize);
 	if(ActualViewportSize != ViewportSize)
@@ -450,8 +452,8 @@ void UTouchInputComponent::DestroyComponent(bool bPromoteChildren)
 
 bool UTouchInputComponent::LoadInputData()
 {
-	const UManagersSystem* MS = UManagersSystem::Get(this);
-	if(!MS) return false;;
+	const UManagersSystem* MS = UManagersSystem::GetWithContext(this);
+	if(!MS) return false;
 
 	const UStatsManager* SM = MS->GetManager<UStatsManager>();
 	if(!SM) return false;
@@ -462,6 +464,8 @@ bool UTouchInputComponent::LoadInputData()
 	if(!Stat->HasSlotSave(PresetSlot, Slot)) return false;
 
 	UTouchInputSaveObject* SaveObject = Stat->GetSlotSave<UTouchInputSaveObject>(PresetSlot, Slot);
+	if(!SaveObject) return false;
+	
 	LoadDataFromSaveObject(SaveObject);
 
 	return true;
@@ -474,7 +478,7 @@ void UTouchInputComponent::SaveInputData()
 
 	AddSaveDataToObject(InputSaveObject);
 
-	const UManagersSystem* MS = UManagersSystem::Get(this);
+	const UManagersSystem* MS = UManagersSystem::GetWithContext(this);
 	if(!MS) return;
 
 	UStatsManager* SM = MS->GetManager<UStatsManager>();
