@@ -61,6 +61,7 @@ APlayerController* UTouchInputsComponent::GetOwningPlayerController() const
 
 void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 {
+	if(GetOwner<APlayerController>()) return;
 	if(NewPawn == GetOwner()) return;
 
 	bPossessed = false;
@@ -129,7 +130,7 @@ void UTouchInputsComponent::BindTouchEvents()
 	
 	const APlayerController* OwningPlayerController = GetOwningPlayerController();
 
-	if(!OwningPlayerController) return;
+	if(!OwningPlayerController || !OwningPlayerController->InputComponent) return;
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &UTouchInputsComponent::OnTouchPressed);
 	LOG(LogTouchInputsSystem, "Touch Press Binded")
