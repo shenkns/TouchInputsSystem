@@ -1,4 +1,4 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 using UnrealBuildTool;
 
@@ -7,6 +7,7 @@ public class TouchInputsSystem : ModuleRules
 	public TouchInputsSystem(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+		CppStandard = CppStandardVersion.Cpp17;
 
 		PrivateIncludePaths.AddRange(
 			new string[] 

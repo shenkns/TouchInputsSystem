@@ -1,4 +1,4 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 #include "Components/Inputs/TouchInputComponent.h"
 
@@ -8,7 +8,6 @@
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Widgets/ButtonTouchInputDebugWidget.h"
-#include "LogSystem.h"
 #include "ManagersSystem.h"
 #include "Interfaces/TouchInputWidgetInterface.h"
 #include "Managers/StatsManager.h"
@@ -16,6 +15,8 @@
 #include "Module/TouchInputsSystemSettings.h"
 #include "Stats/TouchInputsStat.h"
 #include "TouchInputsConfigurationObjects/TouchInputSaveObject.h"
+
+DEFINE_LOG_CATEGORY_LOCAL(LogTouchInputsSystem);
 
 UTouchInputComponent::UTouchInputComponent()
 {
@@ -56,7 +57,7 @@ bool UTouchInputComponent::CheckViewportSizeChanged()
 	{
 		ActualViewportSize = ViewportSize;
 
-		LOG(LogTouchInputsSystem, "New Viewport Size: %s", *ActualViewportSize.ToString())
+		LOG(Display, "New Viewport Size: {}", *ActualViewportSize.ToString());
 
 		return true;
 	}
@@ -229,13 +230,13 @@ void UTouchInputComponent::UpdateBoundsInPercent(bool bIsViewportChanged)
 		const float MaxNonRectangularBoundsSizeAxis = FMath::Max(NonRectangularBoundsSize.X, NonRectangularBoundsSize.Y);
 		BoundsSize = FVector2D(MaxNonRectangularBoundsSizeAxis, MaxNonRectangularBoundsSizeAxis);
 
-		LOG(LogTouchInputsSystem, "New Bounds Size: %s", *BoundsSize.ToString())
+		LOG(Display, "New Bounds Size: {}", *BoundsSize.ToString());
 	}
 	else
 	{
 		BoundsSize = NonRectangularBoundsSize;
 
-		LOG(LogTouchInputsSystem, "New Bounds Size: %s", *BoundsSize.ToString())
+		LOG(Display, "New Bounds Size: {}", *BoundsSize.ToString());
 	}
 }
 
@@ -267,7 +268,7 @@ void UTouchInputComponent::UpdateBackgroundWidget()
 		}
 	}
 
-	LOG(LogTouchInputsSystem, "%s Background Widget Transform Updated", *BackgroundWidget->GetName())
+	LOG(Display, "{} Background Widget Transform Updated", BackgroundWidget);
 }
 
 FVector2D UTouchInputComponent::GetScreenSizeBySizeInPercent(FVector2D PercentSize) const
@@ -303,7 +304,7 @@ void UTouchInputComponent::Activate(bool bReset)
 		BackgroundWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
-	LOG(LogTouchInputsSystem, "Activated")
+	LOG(Display, "Activated");
 }
 
 void UTouchInputComponent::Deactivate()
@@ -315,7 +316,7 @@ void UTouchInputComponent::Deactivate()
 		BackgroundWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 
-	LOG(LogTouchInputsSystem, "Deactivated")
+	LOG(Display, "Deactivated");
 }
 
 void UTouchInputComponent::SetupBounds()
@@ -335,7 +336,7 @@ void UTouchInputComponent::SetupBounds()
 		BoundsSize = BoundsSizeSetup;
 	}
 
-	LOG(LogTouchInputsSystem, "New Bounds Origin: %s, New Bounds Size: %s", *BoundsOrigin.ToString(), *BoundsSize.ToString())
+	LOG(Display, "New Bounds Origin: {}, New Bounds Size: {}", *BoundsOrigin.ToString(), *BoundsSize.ToString());
 }
 
 void UTouchInputComponent::SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint)
@@ -382,7 +383,7 @@ void UTouchInputComponent::SetupBackgroundWidget(UTexture2D* Background, FLinear
 
 	UpdateBackgroundWidget();
 
-	LOG(LogTouchInputsSystem, "%s Backgrounds Widget Initialized", *BackgroundWidget->GetName())
+	LOG(Display, "{} Backgrounds Widget Initialized", BackgroundWidget);
 }
 
 void UTouchInputComponent::BeginDestroy()
@@ -435,7 +436,7 @@ bool UTouchInputComponent::ValidateDebugWidget()
 	DebugWidget->BoundsOrigin = BoundsOrigin;
 	DebugWidget->BoundsSize = BoundsSize;
 
-	LOG(LogTouchInputsSystem, "%s Debug Widget Validated", *DebugWidget->GetName())
+	LOG(Display, "{} Debug Widget Validated", DebugWidget);
 
 	return true;
 }

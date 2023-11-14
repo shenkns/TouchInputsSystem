@@ -1,8 +1,10 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 #include "Module/TouchInputsSystemModule.h"
 
+#include "Log.h"
 #include "LogSystem.h"
+#include "Log/Details/LocalLogCategory.h"
 #include "Module/TouchInputsSystemSettings.h"
 
 #if UE_EDITOR
@@ -12,6 +14,7 @@
 IMPLEMENT_MODULE(FTouchInputsSystemModule, TouchInputsSystem)
 
 TOUCHINPUTSSYSTEM_API DEFINE_LOG_CATEGORY(LogTouchInputsSystem);
+DEFINE_LOG_CATEGORY_LOCAL(LogTouchInputsSystem);
 
 void FTouchInputsSystemModule::StartupModule()
 {
@@ -41,7 +44,7 @@ void FTouchInputsSystemModule::RegisterSystemSettings() const
 			GetMutableDefault<UTouchInputsSystemSettings>()
 		);
 
-		LOG_STATIC(LogTouchInputsSystem, "Touch Inputs System Settings Registered")
+		LOG(Display, "Touch Inputs System Settings Registered");
 	}
 }
 
@@ -51,7 +54,7 @@ void FTouchInputsSystemModule::UnregisterSystemSettings() const
 	{
 		SettingsModule->UnregisterSettings("Project", "Plugins", "Touch Inputs System");
 
-		LOG_STATIC(LogTouchInputsSystem, "Touch Inputs System Settings Unregistered")
+		LOG(Display, "Touch Inputs System Settings Unregistered");
 	}
 }
 #endif

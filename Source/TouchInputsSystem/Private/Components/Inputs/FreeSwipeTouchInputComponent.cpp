@@ -1,14 +1,17 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 #include "Components/Inputs/FreeSwipeTouchInputComponent.h"
 
-#include "LogSystem.h"
+#include "Log.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Log/Details/LocalLogCategory.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "Module/TouchInputsSystemSettings.h"
 #include "TouchInputsConfigurationObjects/FreeSwipeTouchInputSaveObject.h"
 #include "Widgets/TouchInputDebugWidget.h"
+
+DEFINE_LOG_CATEGORY_LOCAL(LogTouchInputsSystem);
 
 UFreeSwipeTouchInputComponent::UFreeSwipeTouchInputComponent()
 {
@@ -34,7 +37,7 @@ void UFreeSwipeTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Ti
 
 	OnDeltaLocationChanged.Broadcast(FVector2D(CurrentDelta));
 
-	LOG(LogTouchInputsSystem, "Location Changed Delta: %s", *FVector2D(CurrentDelta).ToString())
+	LOG(Display, "Location Changed Delta: {}", *FVector2D(CurrentDelta).ToString());
 }
 
 void UFreeSwipeTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)
@@ -46,7 +49,7 @@ void UFreeSwipeTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type Finger
 
 	OnTap.Broadcast(Location, FingerIndex);
 
-	LOG(LogTouchInputsSystem, "Tap: Touch %d %s", FingerIndex, *Location.ToString())
+	LOG(Display, "Tap: Touch {} {}", (int)FingerIndex, Location);
 
 	if(ValidateDebugWidget())
 	{
@@ -74,7 +77,7 @@ void UFreeSwipeTouchInputComponent::OnEventTouchMoved(ETouchIndex::Type FingerIn
 
 	OnDeltaLocationChanged.Broadcast(FVector2D(CurrentDelta));
 
-	LOG(LogTouchInputsSystem, "Location Changed Delta: %s", *FVector2D(CurrentDelta).ToString())
+	LOG(Display, "Location Changed Delta: {}", *FVector2D(CurrentDelta).ToString());
 
 	PreviousLocation = Location;
 
@@ -98,7 +101,7 @@ void UFreeSwipeTouchInputComponent::OnEventTouchReleased(ETouchIndex::Type Finge
 
 	OnTapRelease.Broadcast(Location, FingerIndex);
 
-	LOG(LogTouchInputsSystem, "Release: Touch %d %s", FingerIndex, *Location.ToString())
+	LOG(Display, "Release: Touch %d %s", (int)FingerIndex, Location);
 
 	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
 	if(Settings && Settings->bShowDebugShapes && DebugWidget)

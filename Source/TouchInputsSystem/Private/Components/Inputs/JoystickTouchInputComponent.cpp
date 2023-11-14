@@ -1,13 +1,16 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 #include "Components/Inputs/JoystickTouchInputComponent.h"
 
-#include "LogSystem.h"
+#include "Log.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Log/Details/LocalLogCategory.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "TouchInputsConfigurationObjects/JoystickTouchInputSaveObject.h"
 #include "Widgets/JoystickTouchInputDebugWidget.h"
 #include "Widgets/JoystickWidget.h"
+
+DEFINE_LOG_CATEGORY_LOCAL(LogTouchInputsSystem);
 
 UJoystickTouchInputComponent::UJoystickTouchInputComponent()
 {
@@ -75,7 +78,7 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 
 			OnJoystickValuesChanged.Broadcast(Axes * FVector2D(bInvertXAxis ? -1.f : 1.f, bInvertYAxis ? -1.f : 1.f), Direction);
 
-			LOG(LogTouchInputsSystem, "Axes Changed: %s", *FVector2D(Axes).ToString())
+			LOG(Display, "Axes Changed: %s", *FVector2D(Axes).ToString());
 		}
 
 		if(PressLocation.X != DragLocation.X || PressLocation.Y != DragLocation.Y)
@@ -84,7 +87,7 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 
 			OnPickerLocationChanged.Broadcast(DragLocation);
 
-			LOG(LogTouchInputsSystem, "Picker Location Changed Delta: %s", *FVector2D(DragLocation).ToString())
+			LOG(Display, "Picker Location Changed Delta: %s", *FVector2D(DragLocation).ToString());
 		}
 
 		if(!((Axes.X != 0.f || Axes.Y != 0.f) && (PressLocation.X != DragLocation.X || PressLocation.Y != DragLocation.Y)))
@@ -93,7 +96,7 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 			{
 				OnJoystickClamped.Broadcast();
 
-				LOG(LogTouchInputsSystem, "Joystick Clamped")
+				LOG(Display, "Joystick Clamped");
 			}
 		}
 	}
@@ -108,7 +111,7 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 
 		OnJoystickValuesChanged.Broadcast(Axes * FVector2D(bInvertXAxis ? -1.f : 1.f, bInvertYAxis ? -1.f : 1.f), Direction);
 
-		LOG(LogTouchInputsSystem, "Joystick Values Changed: %s, Direction: %s, Angle: %f", *FVector2D(Axes).ToString(), *Direction.ToString(), Angle)
+		LOG(Display, "Joystick Values Changed: %s, Direction: %s, Angle: %f", *FVector2D(Axes).ToString(), *Direction.ToString(), Angle);
 	}
 }
 
@@ -166,10 +169,10 @@ void UJoystickTouchInputComponent::OnEventTouchMoved(ETouchIndex::Type FingerInd
 	UpdateLockAxes();
 
 	OnJoystickLocationChanged.Broadcast(PressLocation);
-	LOG(LogTouchInputsSystem, "Joystick Location Changed: %s", *PressLocation.ToString())
+	LOG(Display, "Joystick Location Changed: %s", PressLocation);
 	
 	OnPickerLocationChanged.Broadcast(DragLocation);
-	LOG(LogTouchInputsSystem, "Picker Location Changed Delta: %s", *FVector2D(DragLocation).ToString())
+	LOG(Display, "Picker Location Changed Delta: %s", *FVector2D(DragLocation).ToString());
 	
 
 	if(ValidateDebugWidget())
@@ -328,7 +331,7 @@ void UJoystickTouchInputComponent::UpdateLockAxes()
 		PressLocation.X = LockedAxis != EJoystickAxis::X && LockedAxis != EJoystickAxis::Both ? PressLocation.X : UKismetMathLibrary::FInterpTo(DragLocation.X, PressLocation.X, GetWorld()->GetDeltaSeconds(), 12.f);
 		PressLocation.Y = LockedAxis != EJoystickAxis::Y && LockedAxis != EJoystickAxis::Both ? PressLocation.Y : UKismetMathLibrary::FInterpTo(DragLocation.Y, PressLocation.Y, GetWorld()->GetDeltaSeconds(), 12.f);
 
-		LOG(LogTouchInputsSystem, "Lock Axes Updated")
+		LOG(Display, "Lock Axes Updated");
 	}
 }
 
@@ -351,5 +354,5 @@ void UJoystickTouchInputComponent::UpdateFloating()
 	
 	DragLocation = IsNotMaxMagnitude ? DragLocation : PressLocation + Direction * MaxMagnitude;
 
-	LOG(LogTouchInputsSystem, "Floating Updated")
+	LOG(Display, "Floating Updated");
 }

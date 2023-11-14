@@ -1,12 +1,13 @@
-// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2022.
+// Copyright shenkns Touch Inputs System Developed With Unreal Engine. All Rights Reserved 2023.
 
 #include "Components/TouchInputsComponent.h"
 
-#include "Kismet/GameplayStatics.h"
+#include "Log.h"
 #include "Components/Inputs/TouchInputComponent.h"
+#include "Log/Details/LocalLogCategory.h"
 #include "Module/TouchInputsSystemModule.h"
-#include "LogSystem.h"
-#include "Engine/ActorChannel.h"
+
+DEFINE_LOG_CATEGORY_LOCAL(LogTouchInputsSystem);
 
 UTouchInputsComponent::UTouchInputsComponent()
 {
@@ -119,27 +120,28 @@ void UTouchInputsComponent::BindTouchEvents()
 	if(!OwningPlayerController || !OwningPlayerController->InputComponent) return;
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &UTouchInputsComponent::OnTouchPressed);
-	LOG(LogTouchInputsSystem, "Touch Press Binded")
+	LOG(Display, "Touch Press Binded");
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Released, this, &UTouchInputsComponent::OnTouchReleased);
-	LOG(LogTouchInputsSystem, "Touch Release Binded")
+	LOG(Display, "Touch Release Binded");
 	
 	OwningPlayerController->InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &UTouchInputsComponent::OnTouchMoved);
-	LOG(LogTouchInputsSystem, "Touch Move Binded")
+	LOG(Display, "Touch Move Binded");
 
 	bBinded = true;
-	LOG(LogTouchInputsSystem, "%s Touch Events Binded", *GetName())
+	
+	LOG(Display, "{} Touch Events Binded", this);
 }
 
 void UTouchInputsComponent::OnTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)
 {
-	LOG(LogTouchInputsSystem, "%d Touch Pressed", FingerIndex)
+	LOG(Display, "{} Touch Pressed", (int)FingerIndex);
 
 	TArray<UTouchInputComponent*> Components;
 	GetOwner()->GetComponents<UTouchInputComponent>(Components);
 	TArray<UTouchInputComponent*> SortedAndFilteredComponents = SortByPriority(FilterByBounds(FilterByActive(Components), Location));
 
-	LOG(LogTouchInputsSystem, "%d Touch Press Affect %d Touch Components", FingerIndex, SortedAndFilteredComponents.Num())
+	LOG(Display, "{} Touch Press Affect {} Touch Components", (int)FingerIndex, SortedAndFilteredComponents.Num());
 
 	int HighestTouchInputPriority = MAX_int32;
 	
@@ -158,7 +160,7 @@ void UTouchInputsComponent::OnTouchPressed(ETouchIndex::Type FingerIndex, FVecto
 
 void UTouchInputsComponent::OnTouchMoved(ETouchIndex::Type FingerIndex, FVector Location)
 {
-	LOG(LogTouchInputsSystem, "%d Touch Moved", FingerIndex)
+	LOG(Display, "{} Touch Moved", (int)FingerIndex);
 
 	TArray<UTouchInputComponent*> Components;
 	GetOwner()->GetComponents<UTouchInputComponent>(Components);
@@ -174,7 +176,7 @@ void UTouchInputsComponent::OnTouchMoved(ETouchIndex::Type FingerIndex, FVector 
 
 void UTouchInputsComponent::OnTouchReleased(ETouchIndex::Type FingerIndex, FVector Location)
 {
-	LOG(LogTouchInputsSystem, "%d Touch Released", FingerIndex)
+	LOG(Display, "{} Touch Released", (int)FingerIndex);
 	TArray<UTouchInputComponent*> Components;
 	GetOwner()->GetComponents<UTouchInputComponent>(Components);
 	
