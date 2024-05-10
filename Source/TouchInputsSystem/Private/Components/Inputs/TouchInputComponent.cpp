@@ -303,6 +303,17 @@ void UTouchInputComponent::Activate(bool bReset)
 		BackgroundWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
+	if(bSaveInputData)
+	{
+		if(!LoadInputData())
+		{
+			SaveInputData();
+		}
+
+	}
+
+	SetupBounds();
+
 	LOG(LogTouchInputsSystem, "Activated")
 }
 
@@ -403,15 +414,6 @@ void UTouchInputComponent::BeginDestroy()
 void UTouchInputComponent::Init()
 {
 	Activate(true);
-	
-	if(bSaveInputData)
-	{
-		if(!LoadInputData())
-		{
-			SaveInputData();
-		}
-
-	}
 	
 	CheckViewportSizeChanged();
 	CheckPawnPossessedByPlayer();
