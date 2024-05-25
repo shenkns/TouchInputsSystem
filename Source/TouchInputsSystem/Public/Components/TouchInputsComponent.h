@@ -44,6 +44,9 @@ protected:
 	UFUNCTION()
 	void OnPawnChanged(APawn* OldPawn, APawn* NewPawn);
 
+	UFUNCTION()
+	void OnOwnerEndPlay(AActor* Actor , EEndPlayReason::Type EndPlayReason);
+
 private:
 
 	virtual void BeginPlay() override;

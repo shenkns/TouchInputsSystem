@@ -2,11 +2,9 @@
 
 #include "Components/TouchInputsComponent.h"
 
-#include "Kismet/GameplayStatics.h"
 #include "Components/Inputs/TouchInputComponent.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "LogSystem.h"
-#include "Engine/ActorChannel.h"
 
 UTouchInputsComponent::UTouchInputsComponent()
 {
@@ -82,6 +80,17 @@ void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 	}
 }
 
+void UTouchInputsComponent::OnOwnerEndPlay(AActor* Actor, EEndPlayReason::Type EndPlayReason)
+{
+	TArray<UTouchInputComponent*> Components;
+	Actor->GetComponents<UTouchInputComponent>(Components);
+
+	for(UTouchInputComponent* TouchInput : Components)
+	{
+		TouchInput->Deactivate();
+	}
+}
+
 void UTouchInputsComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -99,6 +108,11 @@ void UTouchInputsComponent::PossessionUpdated()
 	bPossessed = true;
 		
 	Init();
+
+	if(GetOwner())
+	{
+		GetOwner()->OnEndPlay.AddUniqueDynamic(this, &UTouchInputsComponent::OnOwnerEndPlay);
+	}
 		
 	if(APlayerController* OwningPlayerController = GetOwningPlayerController())
 	{
