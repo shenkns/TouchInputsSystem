@@ -303,6 +303,12 @@ void UTouchInputComponent::Activate(bool bReset)
 		BackgroundWidget->SetVisibility(ESlateVisibility::Visible);
 	}
 
+	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
+	if(Settings && Settings->bShowDebugShapes && DebugWidget)
+	{
+		DebugWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+
 	if(bSaveInputData)
 	{
 		if(!LoadInputData())
@@ -325,6 +331,8 @@ void UTouchInputComponent::Deactivate()
 	{
 		BackgroundWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
+
+	if(DebugWidget) DebugWidget->SetVisibility(ESlateVisibility::Hidden);
 
 	LOG(LogTouchInputsSystem, "Deactivated")
 }

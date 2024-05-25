@@ -3,9 +3,7 @@
 #include "Components/Inputs/ButtonTouchInputComponent.h"
 
 #include "LogSystem.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Widgets/ButtonTouchInputDebugWidget.h"
-#include "LogSystem.h"
 #include "Module/TouchInputsSystemModule.h"
 #include "Module/TouchInputsSystemSettings.h"
 #include "TouchInputsConfigurationObjects/ButtonTouchInputSaveObject.h"
@@ -25,26 +23,6 @@ UButtonTouchInputComponent::UButtonTouchInputComponent()
 void UButtonTouchInputComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
-void UButtonTouchInputComponent::Activate(bool bReset)
-{
-	Super::Activate(bReset);
-
-	const UTouchInputsSystemSettings* Settings = GetDefault<UTouchInputsSystemSettings>();
-	if(!Settings || !Settings->bShowDebugShapes) return;
-	if(!DebugWidget) return;
-
-	DebugWidget->SetVisibility(ESlateVisibility::Visible);
-}
-
-void UButtonTouchInputComponent::Deactivate()
-{
-	Super::Deactivate();
-
-	if(!DebugWidget) return;
-
-	DebugWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UButtonTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)
