@@ -112,6 +112,20 @@ void UJoystickTouchInputComponent::TickComponent(float DeltaTime, ELevelTick Tic
 	}
 }
 
+void UJoystickTouchInputComponent::Activate(bool bReset)
+{
+	Super::Activate(bReset);
+
+	if(JoystickWidget) JoystickWidget->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UJoystickTouchInputComponent::Deactivate()
+{
+	Super::Deactivate();
+
+	if(JoystickWidget) JoystickWidget->SetVisibility(ESlateVisibility::Hidden);
+}
+
 void UJoystickTouchInputComponent::OnEventTouchPressed(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Super::OnEventTouchPressed(FingerIndex, Location);
@@ -257,7 +271,7 @@ void UJoystickTouchInputComponent::SetupBounds()
 
 void UJoystickTouchInputComponent::SetupBackgroundsByBounds(UTexture2D* Background, FLinearColor Tint)
 {
-	JoystickWidget = CreateWidget<UJoystickWidget>(GetWorld(), BackgroundWidgetClass);
+	if(!JoystickWidget) JoystickWidget = CreateWidget<UJoystickWidget>(GetWorld(), BackgroundWidgetClass);
 	BackgroundWidget = JoystickWidget;
 
 	JoystickWidget->InitJoystickWidget(this);

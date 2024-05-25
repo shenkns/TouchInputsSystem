@@ -131,6 +131,9 @@ public:
 	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	virtual void Activate(bool bReset) override;
+	virtual void Deactivate() override;
+
 	virtual void OnEventTouchPressed(ETouchIndex::Type FingerIndex, FVector Location) override;
 	virtual void OnEventTouchMoved(ETouchIndex::Type FingerIndex, FVector Location) override;
 	virtual void OnEventTouchReleased(ETouchIndex::Type FingerIndex, FVector Location) override;
