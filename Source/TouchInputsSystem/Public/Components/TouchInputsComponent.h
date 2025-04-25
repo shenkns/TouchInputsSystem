@@ -49,7 +49,8 @@ protected:
 
 private:
 
-	virtual void BeginPlay() override;
+	virtual void Activate(bool bReset) override;
+	virtual void Deactivate() override;
 	
 	void Init();
 

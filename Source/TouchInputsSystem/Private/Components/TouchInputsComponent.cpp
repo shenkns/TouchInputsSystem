@@ -82,18 +82,12 @@ void UTouchInputsComponent::OnPawnChanged(APawn* OldPawn, APawn* NewPawn)
 
 void UTouchInputsComponent::OnOwnerEndPlay(AActor* Actor, EEndPlayReason::Type EndPlayReason)
 {
-	TArray<UTouchInputComponent*> Components;
-	Actor->GetComponents<UTouchInputComponent>(Components);
-
-	for(UTouchInputComponent* TouchInput : Components)
-	{
-		TouchInput->Deactivate();
-	}
+	Deactivate();
 }
 
-void UTouchInputsComponent::BeginPlay()
+void UTouchInputsComponent::Activate(bool bReset)
 {
-	Super::BeginPlay();
+	Super::Activate(bReset);
 
 	if(GetOwningPlayerController())
 	{
@@ -101,8 +95,23 @@ void UTouchInputsComponent::BeginPlay()
 	}
 }
 
+void UTouchInputsComponent::Deactivate()
+{
+	Super::Deactivate();
+
+	TArray<UTouchInputComponent*> Components;
+	GetOwner()->GetComponents<UTouchInputComponent>(Components);
+
+	for(UTouchInputComponent* TouchInput : Components)
+	{
+		TouchInput->Deactivate();
+	}
+}
+
 void UTouchInputsComponent::PossessionUpdated()
 {
+	if(!IsActive()) return;
+	
 	if(bPossessed) return;
 	
 	bPossessed = true;
