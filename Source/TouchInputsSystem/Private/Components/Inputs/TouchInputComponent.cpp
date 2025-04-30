@@ -298,6 +298,8 @@ void UTouchInputComponent::Activate(bool bReset)
 {
 	Super::Activate(bReset);
 
+	if(UKismetSystemLibrary::IsDedicatedServer(this)) return;
+
 	if(BackgroundWidget)
 	{
 		BackgroundWidget->SetVisibility(ESlateVisibility::Visible);
