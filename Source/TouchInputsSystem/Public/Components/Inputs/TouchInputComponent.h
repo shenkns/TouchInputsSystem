@@ -45,6 +45,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "TouchInput|Delegates")
 	FNetworkConnectedEvent OnNetworkConnected;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TouchInput")
+	bool Enabled;
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "TouchInput")

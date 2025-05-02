@@ -140,7 +140,7 @@ void UTouchInputsComponent::Init()
 
 	for(UTouchInputComponent* TouchInputComponent : Components)
 	{
-		if(IsValid(TouchInputComponent))
+		if(IsValid(TouchInputComponent) && TouchInputComponent->Enabled)
 		{
 			TouchInputComponent->Init();
 		}
